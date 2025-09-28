@@ -46,6 +46,24 @@ export const styles = StyleSheet.create({
     color: '#444',
     fontFamily:fonts.LatoRegular
   },
+
+    modButton: 
+  { 
+    marginTop: 10, 
+    backgroundColor: '#14c7dfff', 
+    padding: 10, 
+    borderRadius: 5,
+    width:'48%',
+  },
+
+    delButton: 
+  { 
+    marginTop: 10, 
+    backgroundColor: '#f00404ff', 
+    padding: 10, 
+    borderRadius: 5,
+    width:'48%',
+  },
   
   button: 
   { 
@@ -54,6 +72,16 @@ export const styles = StyleSheet.create({
     padding: 10, 
     borderRadius: 5,
     width:'48%',
+  },
+
+  addButton: 
+  { 
+    marginTop: '10%',
+    marginBottom: '20%', 
+    backgroundColor: '#28a745', 
+    padding: 10, 
+    borderRadius: 5,
+    width:'100%',
   },
 
   buttonContainer: {
