@@ -41,23 +41,35 @@ export default function App() {
   return (
   <SafeAreaProvider>
     <View style={styles.container}>
-      <Text style={styles.title}>🇪🇨 Comidas Típicas del Ecuador</Text>
+      <Text style={styles.title}>Lista de Ejercicios</Text>
 
       <FlatList
         data={dishes}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
         
-          <View style={styles.card}>
-            <Image source={item.image} style={styles.image} />
+          <View style={styles.card}>  
+               
             <Text style={styles.name}>{item.name}</Text>
             <Text style={styles.price}>${item.price.toFixed(2)}</Text>
+
+            <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}
               onPress={() => addToCart(item)}
             >
-              <Text style={styles.buttonText}>Agregar al carrito</Text>
+              <Text style={styles.buttonText}>Editar</Text>
+
             </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => addToCart(item)}
+            >
+              <Text style={styles.buttonText}>Eliminar</Text>
+            </TouchableOpacity>
+            </View>
+
           </View>
          
         )}
