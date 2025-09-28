@@ -52,7 +52,15 @@ export const styles = StyleSheet.create({
     marginTop: 10, 
     backgroundColor: '#28a745', 
     padding: 10, 
-    borderRadius: 5 
+    borderRadius: 5,
+    width:'48%',
+  },
+
+  buttonContainer: {
+    flexDirection: 'row',      
+    justifyContent: 'space-between', 
+    alignItems: 'center',
+    marginTop: '2%',
   },
   
   buttonText: 
