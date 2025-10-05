@@ -18,6 +18,27 @@ export const styles = StyleSheet.create({
     marginBottom: '5%' 
   },
 
+  nameLabel: 
+  {
+    marginTop:'4%',
+    marginLeft:'8%',
+    marginRight:'8%',
+    fontSize: 18,
+    fontFamily: fonts.LatoRegular,
+    color: "#34495e",
+    marginBottom:'4%'
+  },
+
+  label: 
+  {
+    marginLeft:'8%',
+    marginRight:'8%',
+    fontSize: 18,
+    fontFamily: fonts.LatoRegular,
+    color: "#34495e",
+    marginBottom:'4%'
+  },
+
   card: 
   { 
     backgroundColor: '#f8d3cf', 
@@ -84,11 +105,39 @@ export const styles = StyleSheet.create({
     width:'100%',
   },
 
-  buttonContainer: {
+  buttonContainer: 
+  {
     flexDirection: 'row',      
     justifyContent: 'space-between', 
     alignItems: 'center',
     marginTop: '2%',
+  },
+
+  acceptButton: 
+  {
+    paddingVertical: "4%",
+    borderRadius: 8,
+    alignItems: "center",
+    marginHorizontal: '5%',
+    marginVertical: 5,
+    backgroundColor: "#27ae60",
+  },
+
+  cancelButton: 
+  {
+    paddingVertical: "4%",
+    borderRadius: 8,
+    alignItems: "center",
+    marginHorizontal: '5%',
+    marginVertical: 5,
+    backgroundColor: "#e74c3c",
+  },
+
+  modpagesContainer: 
+  {
+    flexDirection: "column",
+    alignItems: "stretch",
+    marginTop: '50%',
   },
   
   buttonText: 
@@ -106,4 +155,19 @@ export const styles = StyleSheet.create({
     marginTop: '5%', 
     marginBottom:'20%' 
   },
+
+  input:{
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    marginLeft:"6%",
+    marginRight:"6%",
+    padding: '2%',
+    fontSize: 16,
+    backgroundColor: "#fff",
+  },
+
+  field: {
+    marginBottom: 20
+  }
 });
