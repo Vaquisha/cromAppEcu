@@ -71,7 +71,7 @@ export default function Index() {
 
             <TouchableOpacity
               style={styles.delButton}
-              onPress={() => addToCart(item)}
+              onPress={() => alert('¿Estás seguro de eliminarlo?')}
             >
               <Text style={styles.buttonText}>Eliminar</Text>
             </TouchableOpacity>
