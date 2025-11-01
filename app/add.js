@@ -1,18 +1,19 @@
-import { View, Text,TextInput, TouchableOpacity } from "react-native";
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { View, Text,TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from "../styles/styles";
 import { useRouter } from 'expo-router';
-import DateTimePicker from "@react-native-community/datetimepicker";
-
 
 export default function AddScreen() {
 
     const router = useRouter()
 
     return(
-        <SafeAreaProvider>
+      
+      <SafeAreaView>
+          <KeyboardAvoidingView>
+            <ScrollView>
             <View style={styles.field}> 
-                <Text style={styles.nameLabel}>Nombre</Text>
+                <Text style={styles.label}>Nombre</Text>
                 <TextInput style={styles.input}/>
             </View>
 
@@ -25,7 +26,7 @@ export default function AddScreen() {
                 <Text style={styles.label}>Tiempo</Text>
                 <TextInput style={styles.input}/>
             </View>
-            
+          </ScrollView>
 
         <View style={styles.modpagesContainer}>
           <TouchableOpacity style={[styles.acceptButton]}>
@@ -36,8 +37,9 @@ export default function AddScreen() {
             <Text style={styles.buttonText}>Cancelar</Text>
           </TouchableOpacity>
         </View>
-
-        </SafeAreaProvider>
+        
+      </KeyboardAvoidingView>
+    </SafeAreaView>
     );
 }
 

@@ -44,6 +44,9 @@ export default function Index() {
 
   if (!fontsLoaded) return null
   
+    const handlePress = (id) =>{
+    router.push(`/exercises/${id}`)
+  }
 
   return (
   <SafeAreaProvider>
@@ -63,7 +66,7 @@ export default function Index() {
             <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.modButton}
-              onPress={() => router.push("edit")}
+              onPress={() => handlePress(item.id)}
             >
               <Text style={styles.buttonText}>Editar</Text>
 

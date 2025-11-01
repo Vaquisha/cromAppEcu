@@ -18,17 +18,6 @@ export const styles = StyleSheet.create({
     marginBottom: '5%' 
   },
 
-  nameLabel: 
-  {
-    marginTop:'4%',
-    marginLeft:'8%',
-    marginRight:'8%',
-    fontSize: 18,
-    fontFamily: fonts.LatoRegular,
-    color: "#34495e",
-    marginBottom:'4%'
-  },
-
   label: 
   {
     marginLeft:'8%',
