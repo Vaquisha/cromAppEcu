@@ -1,7 +1,8 @@
-import { View, Text,TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView } from "react-native";
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text,TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from "../styles/styles";
 import { useRouter } from 'expo-router';
+import CustomTimerInput from '../components/timer'
 
 export default function AddScreen() {
 
@@ -10,7 +11,7 @@ export default function AddScreen() {
     return(
       
       <SafeAreaView>
-          <KeyboardAvoidingView>
+          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === "ios" ? 100:0 }>
             <ScrollView>
             <View style={styles.field}> 
                 <Text style={styles.label}>Nombre</Text>
@@ -24,7 +25,7 @@ export default function AddScreen() {
 
             <View style={styles.field}>
                 <Text style={styles.label}>Tiempo</Text>
-                <TextInput style={styles.input}/>
+                <CustomTimerInput/>
             </View>
           </ScrollView>
 
