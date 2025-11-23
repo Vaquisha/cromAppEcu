@@ -2,7 +2,7 @@ import { View, Text,TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollVie
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from "../styles/styles";
 import { useRouter } from 'expo-router';
-import CustomTimerInput from '../components/timer'
+import CustomTimerInput from '../components/Timer/timer'
 
 export default function AddScreen() {
 
