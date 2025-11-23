@@ -1,6 +1,6 @@
 import { registerRootComponent } from 'expo';
 import React, { useState } from 'react';
-import { View, Text, Image, 
+import { View, Text, 
   FlatList, 
   TouchableOpacity, 
   Alert, Pressable } from 'react-native';
@@ -8,16 +8,14 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { dishes } from '../data/dishes.js';
 import { styles } from '../styles/styles.js';
 import { fonts } from '../fonts/fonts.js';
-import { useFonts } from 'expo-font';
 import { useRouter } from 'expo-router';
+import { useFonts } from 'expo-font';
 
 registerRootComponent(Index);
 
 export default function Index() {
-  
+
   const router = useRouter()
-  
-  const [cart, setCart] = useState([]);
 
   const addToCart = (dish) => {
     setCart([...cart, dish]);
@@ -43,7 +41,7 @@ export default function Index() {
   })
 
   if (!fontsLoaded) return null
-  
+
     const handlePress = (id) =>{
     router.push(`/exercises/${id}`)
   }
