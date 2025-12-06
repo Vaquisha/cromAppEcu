@@ -1,5 +1,8 @@
 {
   "expo": {
+    "experiments":{
+        "reactCanary": true
+    },
     "name": "EcuadorFoodApp",
     "slug": "EcuadorFoodApp",
     "version": "1.0.0",
