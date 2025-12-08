@@ -2,37 +2,12 @@ import React, { useState } from "react";
 import { View, TextInput, Text } from "react-native";
 import { timerStyles } from "./timerStyle.js";
 
-const CustomTimerInput = ({ onChange }) => {
-  const [minutes, setMinutes] = useState("00");
-  const [seconds, setSeconds] = useState("00");
-
-  const handleMinutes = (value) => {
-    const cleaned = value.replace(/[^0-9]/g, "");
-
-    const formatted = cleaned.slice(0, 2);
-
-    setMinutes(formatted);
-
-    if (onChange) onChange({ minutes: formatted, seconds });
-  };
-
-  const handleSeconds = (value) => {
-    const cleaned = value.replace(/[^0-9]/g, "");
-    let formatted = cleaned.slice(0, 2);
-
-    if (parseInt(formatted) > 59) formatted = "59";
-
-    setSeconds(formatted);
-
-    if (onChange) onChange({ minutes, seconds: formatted });
-  };
+const CustomTimerInput = () => {
 
   return (
     <View style={timerStyles.TimerContainer}>
       <TextInput
         style={timerStyles.TimerInput}
-        value={minutes}
-        onChangeText={handleMinutes}
         keyboardType="numeric"
         maxLength={2}
         placeholder="00"
@@ -43,8 +18,6 @@ const CustomTimerInput = ({ onChange }) => {
 
       <TextInput
         style={timerStyles.TimerInput}
-        value={seconds}
-        onChangeText={handleSeconds}
         keyboardType="numeric"
         maxLength={2}
         placeholder="00"
