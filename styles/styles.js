@@ -33,7 +33,8 @@ export const styles = StyleSheet.create({
     backgroundColor: '#f8d3cf', 
     padding: 15, 
     borderRadius: 10, 
-    marginBottom: 20,
+    marginBottom: "2%",
+    marginTop: "3%",
   },
 
   image: 
@@ -133,7 +134,7 @@ export const styles = StyleSheet.create({
   { 
     color: '#fff', 
     textAlign: 'center', 
-    fontFamily: fonts.MontserratRegular
+    fontFamily: fonts.MontserratRegular,
   },
   
   footer: 

@@ -5,7 +5,7 @@ import { View, Text,
   TouchableOpacity, 
   Alert, Pressable } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { dishes } from '../data/dishes.js';
+import { exercises } from '../data/excercises.js';
 import { styles } from '../styles/styles.js';
 import { fonts } from '../fonts/fonts.js';
 import { useRouter } from 'expo-router';
@@ -42,6 +42,23 @@ export default function Index() {
 
   if (!fontsLoaded) return null
 
+  if (!exercises || exercises.length === 0) {
+    return (
+      <SafeAreaProvider>
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={[styles.name,{ fontSize: 20 }]}>No hay ejercicios disponibles.</Text>
+
+          <Pressable>
+            <TouchableOpacity onPress={() => router.push("add")} style={styles.addButton}>
+              <Text style={[styles.buttonText, { fontSize: 18 }]}>Añadir nuevo ejercicio</Text>
+            </TouchableOpacity>
+          </Pressable>
+        </View>
+
+      </SafeAreaProvider>
+    );
+  }
+
     const handlePress = (id) =>{
     router.push(`/exercises/${id}`)
   }
@@ -52,7 +69,7 @@ export default function Index() {
       <Text style={styles.title}>Lista de Ejercicios</Text>
 
       <FlatList
-        data={dishes}
+        data={exercises}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
         
