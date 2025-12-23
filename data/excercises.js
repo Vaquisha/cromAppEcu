@@ -1,5 +1,6 @@
 import { asyncStorage } from '@react-native-async-storage/async-storage';
 
+
  export const storeData = async (id) => {
   try {
     exercises.id = JSON.stringify(id);
