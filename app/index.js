@@ -1,5 +1,5 @@
 import { registerRootComponent } from 'expo';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, 
   FlatList, 
   TouchableOpacity, 
@@ -16,11 +16,6 @@ registerRootComponent(Index);
 export default function Index() {
 
   const router = useRouter()
-
-  const addToCart = (dish) => {
-    setCart([...cart, dish]);
-    Alert.alert('Agregado', `${dish.name} agregado al carrito`);
-  };
 
   const [fontsLoaded] = useFonts ({
     [fonts.LatoBlack]: require("../fonts/Lato/Lato-Black.ttf"),
@@ -49,7 +44,7 @@ export default function Index() {
           <Text style={[styles.name,{ fontSize: 20 }]}>No hay ejercicios disponibles.</Text>
 
           <Pressable>
-            <TouchableOpacity onPress={() => router.push("add")} style={styles.addButton}>
+            <TouchableOpacity onPress={() => router.push("add")} style={[styles.addButton, { marginTop: '2.5%' }]}>
               <Text style={[styles.buttonText, { fontSize: 18 }]}>Añadir nuevo ejercicio</Text>
             </TouchableOpacity>
           </Pressable>
@@ -81,8 +76,8 @@ export default function Index() {
             <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.modButton}
-              onPress={() => handlePress(item.id)}
-            >
+              onPress={() => handlePress(item.id)}>
+                
               <Text style={styles.buttonText}>Editar</Text>
 
             </TouchableOpacity>

@@ -87,8 +87,8 @@ export const styles = StyleSheet.create({
 
   addButton: 
   { 
-    marginTop: '10%',
-    marginBottom: '20%', 
+    marginTop: '8%',
+    marginBottom: '16%', 
     backgroundColor: '#28a745', 
     padding: 10, 
     borderRadius: 5,
@@ -127,7 +127,9 @@ export const styles = StyleSheet.create({
   {
     flexDirection: "column",
     alignItems: "stretch",
-    marginTop: '48%',
+    paddingTop: "5%",
+    paddingBottom: "8%",
+    marginTop: '50%'
   },
   
   buttonText: 
@@ -135,6 +137,7 @@ export const styles = StyleSheet.create({
     color: '#fff', 
     textAlign: 'center', 
     fontFamily: fonts.MontserratRegular,
+    fontSize: 16
   },
   
   footer: 
