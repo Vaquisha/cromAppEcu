@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform, Dimensions } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from "../styles/styles";
 import { useRouter } from 'expo-router';
@@ -8,10 +8,11 @@ import { exercises, storeData } from "../data/excercises";
 export default function AddScreen() {
 
     const router = useRouter()
+    const PhoneDimensions = Dimensions.get('screen');
 
     return(
       <SafeAreaView>
-          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === "ios" ? 100:0 }>
+          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === "ios" ? 100:100 }>
             <ScrollView>
             <View style={styles.field}> 
                 <Text style={styles.label}>Nombre</Text>
@@ -29,9 +30,9 @@ export default function AddScreen() {
             </View>
           </ScrollView>
 
-        <View style={styles.modpagesContainer}>
+        <View style={[styles.modpagesContainer, {marginTop: PhoneDimensions.height < 800 ? '36.8%': '50%'}]}>
           <TouchableOpacity style={[styles.acceptButton]}>
-            <Text style={styles.buttonText} onPress={(storeData)}>Aceptar</Text>
+            <Text style={styles.buttonText}>Aceptar</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.cancelButton]} onPress={() => router.back()}>

@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from "expo-router";
-import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform  } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform,  Dimensions  } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { styles } from "../../styles/styles";
@@ -11,6 +11,7 @@ export default function EditScreen(){
     const { id } = useLocalSearchParams(id)
     const [exerciseData, setExerciseData] = useState({});
     const router = useRouter()
+    const PhoneDimensions = Dimensions.get('screen');
 
     useEffect(() => {
          const fetchExerciseData = async (id) => {
@@ -21,8 +22,8 @@ export default function EditScreen(){
     }, [id]);
 
     return(
- <SafeAreaView>
-          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === "ios" ? 100:0 }>
+   <SafeAreaView>
+          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === "ios" ? 100:100 }>
             <ScrollView>
             <View style={styles.field}> 
                 <Text style={styles.label}>Nombre</Text>
@@ -43,7 +44,7 @@ export default function EditScreen(){
             </View>
           </ScrollView>
 
-        <View style={styles.modpagesContainer}>
+        <View style={[styles.modpagesContainer, {marginTop: PhoneDimensions.height < 800 ? '36.8%': '50%'}]}>
           <TouchableOpacity style={[styles.acceptButton]}>
             <Text style={styles.buttonText}>Aceptar</Text>
           </TouchableOpacity>
@@ -54,6 +55,6 @@ export default function EditScreen(){
         </View>
         
       </KeyboardAvoidingView>
-    </SafeAreaView>
+   </SafeAreaView>
     )
 }
