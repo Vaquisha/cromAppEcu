@@ -48,7 +48,16 @@ export const styles = StyleSheet.create({
   { 
     fontSize: 20, 
     fontFamily: fonts.LatoRegular, 
-    marginVertical: '5%'
+    marginVertical: '5%',
+    marginBottom: '4%'
+  },
+
+  description:
+  { 
+    fontSize: 16, 
+    color: '#666',
+    fontFamily:fonts.LatoRegular,
+    marginBottom: '5%'
   },
 
   price: 
