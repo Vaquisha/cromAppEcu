@@ -18,7 +18,7 @@ export const modalStyles = StyleSheet.create ({
     TimerDisplay:{
         fontSize: 48,
         fontFamily: fonts.LatoRegular,
-        marginBottom: 30,
+        marginBottom: 20,
       },
 
     ButtonContainer: {
@@ -31,14 +31,14 @@ export const modalStyles = StyleSheet.create ({
     Buttons:{
         borderRadius: 5,
         padding: 10,
-        width: 300,
-        backgroundColor: "pink",
+        width: "90%",
+        backgroundColor: '#96c3faff',
         justifyContent: "center",
         alignItems: "center",
       },
 
     ButtonText:{
-        fontSize: 18,
+        fontSize: 22,
         fontFamily: fonts.LatoRegular,
       },
 })  

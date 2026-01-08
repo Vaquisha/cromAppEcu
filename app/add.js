@@ -36,8 +36,8 @@ export default function AddScreen() {
 
     return(
       <SafeAreaView>
-          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === "ios" ? 100:30 }>
-            <ScrollView>
+          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === "ios" ? 100:30}>
+            <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.field}> 
               <Text style={styles.label}>Nombre</Text>
               <TextInput style={styles.input} value={newName} onChangeText={setNewName} placeholder="Aquí va el nombre de tu ejercicio"/>
