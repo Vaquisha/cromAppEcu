@@ -3,7 +3,8 @@ import { Modal, View, Text, TouchableOpacity } from 'react-native';
 import { Audio } from 'expo-av';
 import { modalStyles } from './modalStyle.js';
 
-const [beep, alarm] = ('asset:/../../assets/sounds/beep_short.ogg', 'asset:/../../assets/sounds/alarm_long.ogg');
+const alarm = require('../../assets/sounds/alarm_clock.mp3');
+const beep = require('../../assets/sounds/beep_short.mp3');
 
 
 function parseToSeconds(value) {
