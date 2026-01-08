@@ -26,7 +26,7 @@ export const timerStyles = StyleSheet.create ({
 
     TimeSeparator: 
         {
-            color: "#fff",
+            color: "#000000ff",
             fontSize: 28,
             marginHorizontal: 15,
         },

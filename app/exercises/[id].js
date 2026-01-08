@@ -4,48 +4,68 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { styles } from "../../styles/styles";
 import { useState, useEffect } from "react";
-import { exercises } from "../../data/excercises.js";
+import { useExercises } from "../../data/excercises.js";
 import CustomTimerInput from '../../components/Timer/timer'
 
 export default function EditScreen(){
-    const { id } = useLocalSearchParams(id)
-    const [exerciseData, setExerciseData] = useState({});
+    const { id } = useLocalSearchParams();
+    const [exerciseData, setExerciseData] = useState(null);
+    const [timerValue, setTimerValue] = useState(0);
+    const { exerciseList, updateExercise } = useExercises();
     const router = useRouter()
     const PhoneDimensions = Dimensions.get('screen');
 
     useEffect(() => {
-         const fetchExerciseData = async (id) => {
-            const exercise = exercises.find(exercises => exercises.id === parseInt(id));
-            setExerciseData(exercise);
-        };
-        fetchExerciseData(id);
-    }, [id]);
+        if (!id) return;
+        const found = exerciseList.find(item => item.id === parseInt(id));
+        if (found) {
+          setExerciseData(found);
+          const time = Number(found.time) || 0;
+          setTimerValue(time);
+        } else {
+          setExerciseData(null);
+        }
+    }, [id, exerciseList]);
 
     return(
    <SafeAreaView>
-          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === "ios" ? 100:100 }>
+          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === "ios" ? 100:30 }>
             <ScrollView>
             <View style={styles.field}> 
                 <Text style={styles.label}>Nombre</Text>
-                <TextInput style={styles.input} placeholder="Añade el nombre" value={exerciseData.name || ""}
+                <TextInput style={styles.input} placeholder="Añade el nombre" value={exerciseData?.name || ""}
                 onChangeText={(text) => setExerciseData({...exerciseData, name: text})}  />
             </View>
 
             <View style={styles.field}>
                 <Text style={styles.label}>Descripción</Text>
                 <TextInput style={styles.input} placeholder="Añade una descipción"
-                value={exerciseData.description || ""}
+                value={exerciseData?.description || ""}
                 onChangeText={(text) => setExerciseData({...exerciseData, description: text})}/>
             </View>
 
             <View style={styles.field}>
                 <Text style={styles.label}>Tiempo</Text>
-                <CustomTimerInput/>
+                {exerciseData && (
+                  <CustomTimerInput
+                    onChange={setTimerValue}
+                    initialMinutes={Math.floor((Number(exerciseData.time)||0) / 60)}
+                    initialSeconds={(Number(exerciseData.time)||0) % 60}
+                  />
+                )}
             </View>
-          </ScrollView>
+          
 
         <View style={[styles.modpagesContainer, {marginTop: PhoneDimensions.height < 800 ? '36.8%': '50%'}]}>
-          <TouchableOpacity style={[styles.acceptButton]}>
+          <TouchableOpacity style={[styles.acceptButton]} onPress={async () => {
+            if (!exerciseData) return;
+            try {
+              await updateExercise({ ...exerciseData, time: timerValue });
+              router.back();
+            } catch (e) {
+              console.log('Error updating', e);
+            }
+          }}>
             <Text style={styles.buttonText}>Aceptar</Text>
           </TouchableOpacity>
 
@@ -53,7 +73,7 @@ export default function EditScreen(){
             <Text style={styles.buttonText}>Cancelar</Text>
           </TouchableOpacity>
         </View>
-        
+        </ScrollView>
       </KeyboardAvoidingView>
    </SafeAreaView>
     )

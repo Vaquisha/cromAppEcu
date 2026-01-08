@@ -1,8 +1,8 @@
 {
   "expo": {
-    "experiments":{
-        "reactCanary": true
-      },
+    "experiments": {
+      "reactCanary": true
+    },
     "name": "EcuadorFoodApp",
     "slug": "EcuadorFoodApp",
     "version": "1.0.0",
@@ -23,7 +23,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.vaquisha.EcuadorFoodApp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -31,6 +32,12 @@
     "plugins": [
       "expo-font",
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "08b1dd3c-d226-48d8-b235-b014e9c2617f"
+      }
+    }
   }
 }
