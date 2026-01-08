@@ -3,7 +3,6 @@ import { Modal, View, Text, TouchableOpacity } from 'react-native';
 import { Audio } from 'expo-av';
 import { modalStyles } from './modalStyle.js';
 
-// load audio assets lazily inside handlers to avoid module-init issues
 const [beep, alarm] = ('asset:/../../assets/sounds/beep_short.ogg', 'asset:/../../assets/sounds/alarm_long.ogg');
 
 
