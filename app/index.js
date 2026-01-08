@@ -10,6 +10,7 @@ import { styles } from '../styles/styles.js';
 import { fonts } from '../fonts/fonts.js';
 import { useRouter } from 'expo-router';
 import { useFonts } from 'expo-font';
+import { registerRootComponent } from 'expo';
 
 function formatTime(value) {
   if (value == null) return '00:00';
@@ -44,6 +45,7 @@ function formatTime(value) {
 }
 
 export default function Index() {
+  registerRootComponent(Index);
 
   const router = useRouter()
   const { exerciseList, removeValue } = useExercises();
