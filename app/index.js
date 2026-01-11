@@ -15,7 +15,6 @@ import { registerRootComponent } from 'expo';
 function formatTime(value) {
   if (value == null) return '00:00';
 
-  // If already in mm:ss format
   if (typeof value === 'string' && value.includes(':')) {
     const parts = value.split(':').map(p => p.replace(/\D/g, ''));
     const mm = String(Number(parts[0] || 0)).padStart(2, '0');
@@ -23,16 +22,15 @@ function formatTime(value) {
     return `${mm}:${ss}`;
   }
 
-  // Try numeric conversion
   const n = Number(value);
   if (Number.isNaN(n)) return '00:00';
 
   let totalSeconds = 0;
-  // If string had a decimal (e.g. "5.5") treat as minutes.decimal -> convert to seconds
+  
   if (typeof value === 'string' && value.includes('.')) {
     totalSeconds = Math.round(n * 60);
   } else {
-    // If numeric value is large, assume it's already seconds; otherwise assume seconds too.
+    
     totalSeconds = Math.round(n);
   }
 

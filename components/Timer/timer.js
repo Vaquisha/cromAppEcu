@@ -3,8 +3,8 @@ import { View, TextInput, Text } from "react-native";
 import { timerStyles } from "./timerStyle.js";
 
 const CustomTimerInput = ({ onChange, initialMinutes = (0), initialSeconds = 0 }) => {
-  const [minutes, setMinutes] = useState(String(initialMinutes));
-  const [seconds, setSeconds] = useState(String(initialSeconds));
+  const [minutes, setMinutes] = (useState(initialMinutes === 0 ? "" : String(initialMinutes)));
+  const [seconds, setSeconds] = (useState(initialSeconds === 0 ? "" : String(initialSeconds)));
 
   useEffect(() => {
     const [m, s] = [parseInt(minutes, 10) || 0, parseInt(seconds, 10) || 0];
@@ -18,6 +18,7 @@ const CustomTimerInput = ({ onChange, initialMinutes = (0), initialSeconds = 0 }
         style={timerStyles.TimerInput}
         keyboardType="numeric"
         maxLength={4}
+        value={minutes}
         placeholder="00"
         placeholderTextColor="#999"
         onChangeText={setMinutes}
@@ -29,6 +30,7 @@ const CustomTimerInput = ({ onChange, initialMinutes = (0), initialSeconds = 0 }
         style={timerStyles.TimerInput}
         keyboardType="numeric"
         maxLength={4}
+        value={seconds}
         placeholder="00"
         placeholderTextColor="#999"
         onChangeText={setSeconds}
