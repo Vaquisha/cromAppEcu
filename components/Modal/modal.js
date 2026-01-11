@@ -36,7 +36,6 @@ const TimerModal = ({ visible, timeValue, name, onClose }) => {
   const intervalRef = useRef(null);
 
   useEffect(() => {
-    // reset when visible or timeValue changes
     const secs = parseToSeconds(timeValue);
     setModalSeconds(secs);
     setDisplaySeconds(secs);
@@ -45,8 +44,6 @@ const TimerModal = ({ visible, timeValue, name, onClose }) => {
 
   useEffect(() => {
     if (!visible) return;
-
-    // clear any existing interval before creating a new one
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
@@ -58,7 +55,6 @@ const TimerModal = ({ visible, timeValue, name, onClose }) => {
       }, 1000);
     }
 
-    // if we reach 0, ensure running is stopped
     if (displaySeconds === 0) {
       setIsRunning(false);
       if (intervalRef.current) {
@@ -94,7 +90,6 @@ const TimerModal = ({ visible, timeValue, name, onClose }) => {
     if (!visible) return;
 
     if (displaySeconds > 0 && displaySeconds <= 5) {
-      // short beep for last 5 seconds (load lazily and cache)
       const src = beep;
       playSound(src, 900);
     }
@@ -120,7 +115,6 @@ const TimerModal = ({ visible, timeValue, name, onClose }) => {
               style={modalStyles.Buttons}
               onPress={async () => {
                 if (!isRunning && displaySeconds > 0) {
-                  // play start beep then start
                   try {
                     const startBeep = new Audio.Sound();
                     const src = beep;
@@ -136,7 +130,7 @@ const TimerModal = ({ visible, timeValue, name, onClose }) => {
                 }
               }}
             >
-              <Text style={modalStyles.ButtonText}>{isRunning ? 'Pausar' : (displaySeconds === 0 ? 'Reiniciar' : 'Iniciar')}</Text>
+              <Text style={modalStyles.ButtonText}>{isRunning ? 'Pausar' : 'Iniciar'}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={modalStyles.Buttons} onPress={() => { setDisplaySeconds(modalSeconds); setIsRunning(false); }}>
