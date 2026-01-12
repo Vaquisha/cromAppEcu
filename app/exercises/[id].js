@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from "expo-router";
-import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform,  Dimensions  } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform,  Dimensions, Keyboard  } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { styles } from "../../styles/styles";
@@ -14,6 +14,21 @@ export default function EditScreen(){
     const { exerciseList, updateExercise } = useExercises();
     const router = useRouter()
     const PhoneDimensions = Dimensions.get('screen');
+        const [keyboardVisible, setKeyboardVisible] = useState(false);
+    
+        useEffect(() => {
+          const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
+            setKeyboardVisible(true);
+          });
+          const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
+            setKeyboardVisible(false);
+          });
+    
+          return () => {
+            showSubscription.remove();
+            hideSubscription.remove();
+          };
+        }, []);
 
     useEffect(() => {
         if (!id) return;
@@ -30,7 +45,7 @@ export default function EditScreen(){
     return(
    <SafeAreaView>
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === "ios" ? 100:30 }>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={keyboardVisible}>
             <View style={styles.field}> 
                 <Text style={styles.label}>Nombre</Text>
                 <TextInput style={styles.input} placeholder="Añade el nombre" value={exerciseData?.name || ""}
