@@ -1,5 +1,5 @@
 import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform, Dimensions, Alert, Keyboard } from "react-native";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from "../styles/styles";
 import { useRouter } from 'expo-router';
@@ -9,6 +9,7 @@ import { useExercises } from "../data/excercises";
 export default function AddScreen() {
 
     const router = useRouter()
+    const scrollViewRef = useRef(null);
     const PhoneDimensions = Dimensions.get('screen');
     const { storeData } = useExercises();
     const [newName, setNewName] = useState('');
@@ -22,6 +23,7 @@ export default function AddScreen() {
       });
       const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
         setKeyboardVisible(false);
+        scrollViewRef.current?.scrollTo({ y: 0, animated: true });
       });
 
       return () => {
@@ -51,16 +53,16 @@ export default function AddScreen() {
 
     return(
       <SafeAreaView>
-          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === "ios" ? 100:30}>
-            <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={keyboardVisible}>
+          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === "ios" ? 100:60}>
+            <ScrollView ref={scrollViewRef} showsVerticalScrollIndicator={false} scrollEnabled={keyboardVisible}>
             <View style={styles.field}> 
               <Text style={styles.label}>Nombre</Text>
-              <TextInput style={styles.input} value={newName} onChangeText={setNewName} placeholder="Aquí va el nombre de tu ejercicio"/>
+              <TextInput style={styles.input} value={newName} onChangeText={setNewName} placeholder="Aquí va el nombre de tu ejercicio" placeholderTextColor="#9E9E9E"/>
             </View>
 
             <View style={styles.field}>
               <Text style={styles.label}>Descripción</Text>
-              <TextInput style={styles.input} value={newDescription} onChangeText={setNewDescription} placeholder="Una breve descripción del ejercicio"/>
+              <TextInput style={styles.input} value={newDescription} onChangeText={setNewDescription} placeholder="Una breve descripción del ejercicio" placeholderTextColor="#9E9E9E"/>
             </View>
 
             <View style={styles.field}>

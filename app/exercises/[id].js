@@ -48,13 +48,13 @@ export default function EditScreen(){
             <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={keyboardVisible}>
             <View style={styles.field}> 
                 <Text style={styles.label}>Nombre</Text>
-                <TextInput style={styles.input} placeholder="Añade el nombre" value={exerciseData?.name || ""}
+                <TextInput style={styles.input} placeholder="Añade el nombre" placeholderTextColor="#9E9E9E" value={exerciseData?.name || ""}
                 onChangeText={(text) => setExerciseData({...exerciseData, name: text})}  />
             </View>
 
             <View style={styles.field}>
                 <Text style={styles.label}>Descripción</Text>
-                <TextInput style={styles.input} placeholder="Añade una descipción"
+                <TextInput style={styles.input} placeholder="Añade una descipción" placeholderTextColor="#9E9E9E"
                 value={exerciseData?.description || ""}
                 onChangeText={(text) => setExerciseData({...exerciseData, description: text})}/>
             </View>
