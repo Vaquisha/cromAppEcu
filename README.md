@@ -142,7 +142,6 @@ Luego puedes abrir la app en un emulador, un dispositivo físico o directamente 
 ## 🎓 ¿Para qué se hizo este proyecto?
 
 Cronómetro de series fue desarrollada como parte de un proceso de aprendizaje y formación académica, con el objetivo de reforzar conocimientos en desarrollo de aplicaciones móviles y el uso de herramientas modernas para crear apps multiplataforma.
->>>>>>> origin/master
 
 ---
 
