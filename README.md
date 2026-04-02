@@ -1,6 +1,5 @@
 # Cronómetro de series
 
-<<<<<<< HEAD
 ## ¿Qué es Cronómetro de series?
 
 **Cronómetro de series** es una aplicación móvil multiplataforma creada con **React Native** y **Expo**, pensada para ofrecer una experiencia sencilla, rápida y moderna en **Android**, **iOS** y también en **Web**.
@@ -41,7 +40,6 @@ Antes de empezar, asegúrate de tener instalado:
 
 Instala Expo CLI con:
 
-=======
 ## Descripción del proyecto
 
 **Cronómetro de series** es una aplicación móvil multiplataforma desarrollada con **React Native** dentro del ecosistema **Expo**. El proyecto utiliza **Expo Router** para la navegación basada en archivos e integra diversas APIs de Expo para acceder a funcionalidades nativas manteniendo un único código base.
@@ -87,12 +85,11 @@ EcuadorFoodApp/
 - npm o yarn
 - Expo CLI
 
->>>>>>> e7123f8 (Create README.md)
 ```bash
 npm install -g expo-cli
 ```
 
-<<<<<<< HEAD
+
 ### Ejecutar la aplicación
 
 ```bash
@@ -107,7 +104,7 @@ Luego puedes abrir la app en un emulador, un dispositivo físico o directamente 
 ## 🎓 ¿Para qué se hizo este proyecto?
 
 Cronómetro de series fue desarrollada como parte de un proceso de aprendizaje y formación académica, con el objetivo de reforzar conocimientos en desarrollo de aplicaciones móviles y el uso de herramientas modernas para crear apps multiplataforma.
-=======
+
 ### Instalación de dependencias
 
 ```bash
@@ -152,17 +149,13 @@ npm run web       # Ejecutar en navegador web
 ## 👨‍💻 Autor
 
 **Carlos Vaca**  
-<<<<<<< HEAD
 Tecnólogo en Software / Desarrollador de aplicaciones móviles
-=======
 Tecnólogo en Software | Estudiante de Ingeniería en Sistemas
->>>>>>> e7123f8 (Create README.md)
 
 ---
 
 ## 📄 Licencia
 
-<<<<<<< HEAD
 Este proyecto se distribuye bajo la **Licencia Pública General de GNU (GPL)**.
 
 Esto significa que el software es libre: puedes usarlo, estudiarlo, modificarlo y compartirlo, siempre que mantengas la misma licencia y compartas el código fuente de cualquier versión derivada.
@@ -174,5 +167,4 @@ Esto significa que el software es libre: puedes usarlo, estudiarlo, modificarlo 
 Este proyecto se publica bajo la **Licencia Pública General de GNU (GPL)**.
 
 Esto significa que el software puede ser usado, estudiado, modificado y redistribuido libremente, siempre que cualquier trabajo derivado mantenga la misma licencia GPL y se distribuya con su código fuente correspondiente.
->>>>>>> e7123f8 (Create README.md)
 
