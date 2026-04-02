@@ -1,89 +1,242 @@
-import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform, Dimensions, Alert, Keyboard } from "react-native";
-import { useState, useEffect, useRef } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
+  Alert,
+  Keyboard,
+  Dimensions,
+} from "react-native";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "../styles/styles";
-import { useRouter } from 'expo-router';
-import CustomTimerInput from '../components/Timer/timer.js'
+import { useRouter } from "expo-router";
+import CustomTimerInput from "../components/Timer/timer.js";
 import { useExercises } from "../data/excercises";
 
 export default function AddScreen() {
-
-    const router = useRouter()
-    const scrollViewRef = useRef(null);
-    const PhoneDimensions = Dimensions.get('screen');
-    const { storeData } = useExercises();
-    const [newName, setNewName] = useState('');
-    const [newDescription, setNewDescription] = useState('');
-    const [timerValue, setTimerValue] = useState(0);
-    const [keyboardVisible, setKeyboardVisible] = useState(false);
-
-    useEffect(() => {
-      const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
-        setKeyboardVisible(true);
-      });
-      const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
-        setKeyboardVisible(false);
-        scrollViewRef.current?.scrollTo({ y: 0, animated: true });
-      });
-
-      return () => {
-        showSubscription.remove();
-        hideSubscription.remove();
-      };
-    }, []);
-
-    const handleSave = async () => {
-      try {
-
-        if (newName.trim() === '' || newDescription.trim() === '' || timerValue === 0) 
-          {
-        Alert.alert('Atención', 'Por favor, completa todos los campos antes de guardar.');
-        return
-            }
-
-        await storeData({ name: newName, description: newDescription, time: timerValue });
-
-        router.back();
-
-        
-      } catch (e) {
-        console.log('Error saving exercise', e);
-      }
+  const router = useRouter();
+  const scrollViewRef = useRef(null);
+  const { storeData } = useExercises();
+  const screenHeight = Dimensions.get('screen').height;
+  const [newName, setNewName] = useState("");
+  const [newDescription, setNewDescription] = useState("");
+  const [sets, setSets] = useState([
+    {
+      id: 1,
+      series: 1,
+      time: 0,
+      restTime: 0,
     }
+  ]);
 
-    return(
-      <SafeAreaView>
-          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Platform.OS === "ios" ? 100:60}>
-            <ScrollView ref={scrollViewRef} showsVerticalScrollIndicator={false} scrollEnabled={keyboardVisible}>
-            <View style={styles.field}> 
-              <Text style={styles.label}>Nombre</Text>
-              <TextInput style={styles.input} value={newName} onChangeText={setNewName} placeholder="Aquí va el nombre de tu ejercicio" placeholderTextColor="#9E9E9E"/>
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
+      scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+    });
+
+    return () => {
+      showSubscription.remove();
+    };
+  }, []);
+
+  const handleSetChange = useCallback((setIndex, field, value) => {
+    setSets(prev => {
+      const newSets = [...prev];
+      newSets[setIndex] = { ...newSets[setIndex], [field]: value };
+      return newSets;
+    });
+  }, []);
+
+  const handleAddSet = () => {
+    setSets(prev => {
+      const newSetId = Math.max(...prev.map(s => s.id)) + 1;
+      return [
+        ...prev,
+        {
+          id: newSetId,
+          series: 1,
+          time: 0,
+          restTime: 0,
+        }
+      ];
+    });
+  };
+
+  const handleRemoveSet = (setIndex) => {
+    if (sets.length <= 1) {
+      Alert.alert("Atención", "Un ejercicio debe tener al menos un set");
+      return;
+    }
+    setSets(prev => {
+      const newSets = [...prev];
+      newSets.splice(setIndex, 1);
+      return newSets;
+    });
+  };
+
+  const handleSave = async () => {
+    try {
+      if (newName.trim() === "" || newDescription.trim() === "") {
+        Alert.alert(
+          "Atención",
+          "Por favor, completa el nombre y descripción antes de guardar.",
+        );
+        return;
+      }
+
+      if (!sets || sets.length === 0) {
+        Alert.alert("Atención", "El ejercicio debe tener al menos un set");
+        return;
+      }
+
+      await storeData({
+        name: newName,
+        description: newDescription,
+        sets: sets,
+      });
+
+      router.back();
+    } catch (e) {
+      console.log("Error saving exercise", e);
+    }
+  };
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        behavior="padding"
+        keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 60}
+        style={{ flex: 1 }}
+      >
+        <View style={{ flex: 1 }}>
+          <ScrollView
+            ref={scrollViewRef}
+            showsVerticalScrollIndicator={false}
+            scrollEnabled={true}
+          >
+            <View style={styles.field}>
+              <Text style={styles.label}>Nombre del Ejercicio</Text>
+              <TextInput
+                style={styles.input}
+                value={newName}
+                onChangeText={setNewName}
+                placeholder="Aquí va el nombre de tu ejercicio"
+                placeholderTextColor="#9E9E9E"
+              />
             </View>
 
             <View style={styles.field}>
               <Text style={styles.label}>Descripción</Text>
-              <TextInput style={styles.input} value={newDescription} onChangeText={setNewDescription} placeholder="Una breve descripción del ejercicio" placeholderTextColor="#9E9E9E"/>
+              <TextInput
+                style={styles.input}
+                value={newDescription}
+                onChangeText={setNewDescription}
+                placeholder="Una breve descripción del ejercicio"
+                placeholderTextColor="#9E9E9E"
+                multiline
+              />
             </View>
 
+            {/* Sets Management */}
             <View style={styles.field}>
-              <Text style={styles.label}>Tiempo</Text>
-              <CustomTimerInput onChange={setTimerValue} />
-            </View>
-          
+              <Text style={styles.label}>Sets</Text>
+            {sets.map((set, index) => (
+              <View
+                key={set.id}
+                style={{
+                  backgroundColor: '#f9f9f9',
+                  padding: 12,
+                  marginVertical: 8,
+                  borderRadius: 8,
+                  borderLeftWidth: 4,
+                  borderLeftColor: '#14c7dfff'
+                }}
+              >
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                  <Text style={{ fontSize: 14, fontWeight: 'bold' }}>Set {index + 1}</Text>
+                  {sets.length > 1 && (
+                    <TouchableOpacity
+                      onPress={() => handleRemoveSet(index)}
+                      style={{ padding: 4 }}
+                    >
+                      <Text style={{ color: '#f00404ff', fontWeight: 'bold' }}>✕ Eliminar</Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
 
-        <View style={[styles.modpagesContainer, {marginTop: PhoneDimensions.height < 800 ? '36.8%': '50%'}]}>
-          <TouchableOpacity style={[styles.acceptButton]} onPress={handleSave}>
-            <Text style={styles.buttonText}>Aceptar</Text>
-          </TouchableOpacity>
+                {/* Series */}
+                <View style={{ marginBottom: 8 }}>
+                  <Text style={{ fontSize: 12, fontWeight: '600', marginBottom: 4 }}>Número de Series</Text>
+                  <TextInput
+                    style={[styles.input, { fontSize: 12 }]}
+                    placeholder="3"
+                    placeholderTextColor="#9E9E9E"
+                    value={set.series.toString()}
+                    onChangeText={(text) => handleSetChange(index, 'series', parseInt(text) || 0)}
+                    keyboardType="number-pad"
+                  />
+                </View>
 
-          <TouchableOpacity style={[styles.cancelButton]} onPress={() => router.back()}>
-            <Text style={styles.buttonText}>Cancelar</Text>
-          </TouchableOpacity>
+                {/* Time per series */}
+                <View style={{ marginBottom: 8 }}>
+                  <Text style={{ fontSize: 12, fontWeight: '600', marginBottom: 4 }}>Tiempo por Serie (MM:SS)</Text>
+                  <CustomTimerInput
+                    onChange={(value) => handleSetChange(index, 'time', value)}
+                    initialMinutes={Math.floor(set.time / 60)}
+                    initialSeconds={set.time % 60}
+                  />
+                </View>
+
+                {/* Rest Time */}
+                <View>
+                  <Text style={{ fontSize: 12, fontWeight: '600', marginBottom: 4 }}>Descanso entre Series (MM:SS)</Text>
+                  <CustomTimerInput
+                    onChange={(value) => handleSetChange(index, 'restTime', value)}
+                    initialMinutes={Math.floor(set.restTime / 60)}
+                    initialSeconds={set.restTime % 60}
+                  />
+                </View>
+              </View>
+            ))}
+
+            {/* Add Set Button */}
+            <TouchableOpacity
+              style={{
+                backgroundColor: '#28a745',
+                padding: 12,
+                borderRadius: 8,
+                marginTop: 12,
+                alignItems: 'center'
+              }}
+              onPress={handleAddSet}
+            >
+              <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 14 }}>+ Agregar Set</Text>
+            </TouchableOpacity>
+          </View>
+          </ScrollView>
+
+          {/* Fixed Buttons at Bottom */}
+          <View style={[styles.modpagesContainer, { marginTop: screenHeight < 800 ? 36.8 : 50 }]}>
+            <TouchableOpacity
+              style={[styles.acceptButton]}
+              onPress={handleSave}
+            >
+              <Text style={styles.buttonText}>Aceptar</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.cancelButton]}
+              onPress={() => router.back()}
+            >
+              <Text style={styles.buttonText}>Cancelar</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
-    );
-
+  );
 }
-

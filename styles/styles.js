@@ -136,8 +136,8 @@ export const styles = StyleSheet.create({
   {
     flexDirection: "column",
     alignItems: "stretch",
-    paddingTop: "5%",
-    paddingBottom: "8%",
+    paddingTop: 0,
+    paddingBottom: "3%",
     marginTop: '50%'
   },
   

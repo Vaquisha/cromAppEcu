@@ -1,22 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Modal, View, Text, TouchableOpacity } from 'react-native';
-import { Audio } from 'expo-av';
-import { modalStyles } from './modalStyle.js';
-
-const alarm = require('../../assets/sounds/alarm_clock.mp3');
-const beep = require('../../assets/sounds/beep_short.mp3');
-
+import React, { useState, useEffect, useRef } from "react";
+import { Modal, View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { Audio } from "expo-av";
+import { modalStyles } from "./modalStyle.js";
 
 function parseToSeconds(value) {
   if (value == null) return 0;
-  if (typeof value === 'string' && value.includes(':')) {
-    const parts = value.split(':').map(p => p.replace(/\D/g, ''));
+  if (typeof value === "string" && value.includes(":")) {
+    const parts = value.split(":").map((p) => p.replace(/\D/g, ""));
     const [mm, ss] = [Number(parts[0] || 0), Number(parts[1] || 0)];
     return mm * 60 + ss;
   }
   const n = Number(value);
   if (Number.isNaN(n)) return 0;
-  if (typeof value === 'string' && value.includes('.')) {
+  if (typeof value === "string" && value.includes(".")) {
     return Math.round(n * 60);
   }
   return Math.round(n);
@@ -24,23 +20,80 @@ function parseToSeconds(value) {
 
 function formatSecondsToMMSS(totalSeconds) {
   const [minutes, seconds] = [Math.floor(totalSeconds / 60), totalSeconds % 60];
-  const [mm, ss] = [String(minutes).padStart(2, '0'), String(seconds).padStart(2, '0')];
+  const [mm, ss] = [
+    String(minutes).padStart(2, "0"),
+    String(seconds).padStart(2, "0"),
+  ];
   return `${mm}:${ss}`;
 }
 
-const TimerModal = ({ visible, timeValue, name, onClose }) => {
-  const initial = parseToSeconds(timeValue);
+const TimerModal = ({ visible, timeValue, name, onClose, sets = [] }) => {
+  const [currentSetIndex, setCurrentSetIndex] = useState(0);
+  const [currentSeriesIndex, setCurrentSeriesIndex] = useState(0);
+  const [isRestPeriod, setIsRestPeriod] = useState(false);
+
+  const alarmSoundRef = useRef(null);
+  const beepSoundRef = useRef(null);
+
+  // Load sounds once on mount
+  useEffect(() => {
+    const loadSounds = async () => {
+      try {
+        const { sound: alarmSound } = await Audio.Sound.createAsync(
+          require("../../assets/sounds/alarm_clock.mp3"),
+          { shouldPlay: false }
+        );
+        alarmSoundRef.current = alarmSound;
+
+        const { sound: beepSound } = await Audio.Sound.createAsync(
+          require("../../assets/sounds/beep_short.mp3"),
+          { shouldPlay: false }
+        );
+        beepSoundRef.current = beepSound;
+      } catch (error) {
+        console.log("Error loading sounds", error);
+      }
+    };
+
+    loadSounds();
+
+    return () => {
+      if (alarmSoundRef.current) {
+        alarmSoundRef.current.unloadAsync();
+      }
+      if (beepSoundRef.current) {
+        beepSoundRef.current.unloadAsync();
+      }
+    };
+  }, []);
+
+  // Initial time calculation
+  const getInitialTime = () => {
+    if (sets && sets.length > 0) {
+      const currentSet = sets[currentSetIndex];
+      if (isRestPeriod) {
+        return currentSet.restTime || 0;
+      }
+      return currentSet.time || 0;
+    }
+    return parseToSeconds(timeValue);
+  };
+
+  const initial = getInitialTime();
   const [modalSeconds, setModalSeconds] = useState(initial);
   const [displaySeconds, setDisplaySeconds] = useState(initial);
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null);
 
   useEffect(() => {
-    const secs = parseToSeconds(timeValue);
+    const secs = getInitialTime();
     setModalSeconds(secs);
     setDisplaySeconds(secs);
     setIsRunning(false);
-  }, [timeValue, visible]);
+    setCurrentSetIndex(0);
+    setCurrentSeriesIndex(0);
+    setIsRestPeriod(false);
+  }, [visible]);
 
   useEffect(() => {
     if (!visible) return;
@@ -51,16 +104,11 @@ const TimerModal = ({ visible, timeValue, name, onClose }) => {
 
     if (isRunning && displaySeconds > 0) {
       intervalRef.current = setInterval(() => {
-        setDisplaySeconds(s => Math.max(0, s - 1));
+        setDisplaySeconds((s) => Math.max(0, s - 1));
       }, 1000);
-    }
-
-    if (displaySeconds === 0) {
-      setIsRunning(false);
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
+    } else if (displaySeconds === 0 && isRunning) {
+      // Timer finished - handleTimerFinished will manage isRunning state
+      handleTimerFinished();
     }
 
     return () => {
@@ -71,78 +119,213 @@ const TimerModal = ({ visible, timeValue, name, onClose }) => {
     };
   }, [visible, isRunning, displaySeconds]);
 
-  useEffect(() => {
-    let soundObject = null;
-    async function playSound(source, unloadAfter = 1200) {
-      try {
-        soundObject = new Audio.Sound();
-        await soundObject.loadAsync(source);
-        await soundObject.playAsync();
-        setTimeout(() => {
-          try { soundObject.unloadAsync(); } catch {}
-        }, unloadAfter);
-      } catch (e) {
-        console.log('Error playing sound', e);
-        try { soundObject.unloadAsync(); } catch {}
+  const handleTimerFinished = () => {
+    if (!sets || sets.length === 0) return;
+
+    const currentSet = sets[currentSetIndex];
+
+    if (isRestPeriod) {
+      // Rest period finished, go to next series
+      if (currentSeriesIndex < currentSet.series - 1) {
+        // More series in this set
+        setCurrentSeriesIndex((prev) => prev + 1);
+        setIsRestPeriod(false);
+        const nextSeriesTime = currentSet.time || 0;
+        setModalSeconds(nextSeriesTime);
+        setDisplaySeconds(nextSeriesTime);
+        // Keep isRunning true to continue automatically
+      } else {
+        // All series done, move to next set
+        if (currentSetIndex < sets.length - 1) {
+          setCurrentSetIndex((prev) => prev + 1);
+          setCurrentSeriesIndex(0);
+          setIsRestPeriod(false);
+          const nextSetTime = sets[currentSetIndex + 1].time || 0;
+          setModalSeconds(nextSetTime);
+          setDisplaySeconds(nextSetTime);
+          // Keep isRunning true to continue automatically
+        } else {
+          // All sets finished
+          setIsRunning(false);
+          playAlarmSound();
+        }
+      }
+    } else {
+      // Series finished
+      if (currentSet.restTime > 0) {
+        // Start rest period
+        setIsRestPeriod(true);
+        const restTime = currentSet.restTime;
+        setModalSeconds(restTime);
+        setDisplaySeconds(restTime);
+        // Keep isRunning true to continue automatically
+      } else if (currentSeriesIndex < currentSet.series - 1) {
+        // No rest, go directly to next series
+        setCurrentSeriesIndex((prev) => prev + 1);
+        const nextSeriesTime = currentSet.time || 0;
+        setModalSeconds(nextSeriesTime);
+        setDisplaySeconds(nextSeriesTime);
+        // Keep isRunning true to continue automatically
+      } else {
+        // Series finished, no rest, move to next set
+        if (currentSetIndex < sets.length - 1) {
+          setCurrentSetIndex((prev) => prev + 1);
+          setCurrentSeriesIndex(0);
+          setIsRestPeriod(false);
+          const nextSetTime = sets[currentSetIndex + 1].time || 0;
+          setModalSeconds(nextSetTime);
+          setDisplaySeconds(nextSetTime);
+          // Keep isRunning true to continue automatically
+        } else {
+          // All sets finished
+          setIsRunning(false);
+          playAlarmSound();
+        }
       }
     }
+  };
 
+  const playAlarmSound = async () => {
+    try {
+      if (alarmSoundRef.current) {
+        await alarmSoundRef.current.replayAsync();
+      }
+    } catch (e) {
+      console.log("Error playing alarm", e);
+    }
+  };
+
+  const playBeepSound = async () => {
+    try {
+      if (beepSoundRef.current) {
+        await beepSoundRef.current.replayAsync();
+      }
+    } catch (e) {
+      console.log("Error playing beep", e);
+    }
+  };
+
+  useEffect(() => {
     if (!visible) return;
 
-    if (displaySeconds > 0 && displaySeconds <= 5) {
-      const src = beep;
-      playSound(src, 900);
+    if (displaySeconds > 0 && displaySeconds <= 5 && isRunning) {
+      playBeepSound();
+    }
+  }, [displaySeconds, visible, isRunning]);
+
+  const handleSkip5Seconds = () => {
+    setDisplaySeconds((prev) => Math.max(0, prev - 5));
+  };
+
+  const handleAdd5Seconds = () => {
+    setDisplaySeconds((prev) => prev + 5);
+  };
+
+  const getDisplayInfo = () => {
+    if (!sets || sets.length === 0) {
+      return { setName: name || "Ejercicio", info: "" };
     }
 
-    return () => {
-      if (soundObject) {
-        try { soundObject.unloadAsync(); } catch {}
-      }
-    };
-  }, [displaySeconds, visible]);
+    const currentSet = sets[currentSetIndex];
+    const setName = name || `Ejercicio`;
+    const seriesNum = currentSeriesIndex + 1;
+
+    let info = `Set ${currentSetIndex + 1} - Serie ${seriesNum}/${currentSet.series}`;
+    if (isRestPeriod) {
+      info += " (DESCANSO)";
+    }
+
+    return { setName, info };
+  };
 
   if (!visible) return null;
 
+  const { setName, info } = getDisplayInfo();
+
   return (
-    <Modal visible={visible} animationType="slide" transparent={false} onRequestClose={onClose}>
+    <Modal
+      visible={visible}
+      animationType="slide"
+      transparent={false}
+      onRequestClose={onClose}
+    >
       <View style={modalStyles.Container}>
-        <View style={{width: '90%', alignItems: 'center'}}>
-          <Text style={modalStyles.Title}>{name}</Text>
-          <Text style={modalStyles.TimerDisplay}>{formatSecondsToMMSS(displaySeconds)}</Text>
+        <ScrollView
+          contentContainerStyle={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <View style={{ width: "90%", alignItems: "center" }}>
+            <Text style={modalStyles.Title}>{setName}</Text>
+            {info && (
+              <Text style={{ fontSize: 16, color: "#666", marginBottom: 10 }}>
+                {info}
+              </Text>
+            )}
+            <Text style={modalStyles.TimerDisplay}>
+              {formatSecondsToMMSS(displaySeconds)}
+            </Text>
 
-          <View style={modalStyles.ButtonContainer}>
-            <TouchableOpacity
-              style={modalStyles.Buttons}
-              onPress={async () => {
-                if (!isRunning && displaySeconds > 0) {
-                  try {
-                    const startBeep = new Audio.Sound();
-                    const src = beep;
-                    await startBeep.loadAsync(src);
-                    await startBeep.playAsync();
-                    setTimeout(() => { try { startBeep.unloadAsync(); } catch {} }, 800);
-                  } catch (e) {
-                    console.log('Error playing start beep', e);
+            <View style={modalStyles.ButtonContainer}>
+              {/* Skip Time Buttons */}
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  gap: 8,
+                  marginBottom: 12,
+                }}
+              >
+                <TouchableOpacity
+                  style={[modalStyles.Buttons, { flex: 0.4, padding: 8 }]}
+                  onPress={handleSkip5Seconds}
+                  disabled={!isRunning}
+                >
+                  <Text style={modalStyles.ButtonText}>-5s</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[modalStyles.Buttons, { flex: 0.4, padding: 8 }]}
+                  onPress={handleAdd5Seconds}
+                  disabled={!isRunning}
+                >
+                  <Text style={modalStyles.ButtonText}>+5s</Text>
+                </TouchableOpacity>
+              </View>
+
+              <TouchableOpacity
+                style={modalStyles.Buttons}
+                onPress={async () => {
+                  if (!isRunning && displaySeconds > 0) {
+                    await playBeepSound();
+                    setIsRunning(true);
+                  } else {
+                    setIsRunning(false);
                   }
-                  setIsRunning(true);
-                } else {
+                }}
+              >
+                <Text style={modalStyles.ButtonText}>
+                  {isRunning ? "Pausar" : "Iniciar"}
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={modalStyles.Buttons}
+                onPress={() => {
+                  setDisplaySeconds(modalSeconds);
                   setIsRunning(false);
-                }
-              }}
-            >
-              <Text style={modalStyles.ButtonText}>{isRunning ? 'Pausar' : 'Iniciar'}</Text>
-            </TouchableOpacity>
+                }}
+              >
+                <Text style={modalStyles.ButtonText}>Reiniciar</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity style={modalStyles.Buttons} onPress={() => { setDisplaySeconds(modalSeconds); setIsRunning(false); }}>
-              <Text style={modalStyles.ButtonText}>Reiniciar</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={modalStyles.Buttons} onPress={onClose}>
-              <Text style={modalStyles.ButtonText}>Cerrar</Text>
-            </TouchableOpacity>
+              <TouchableOpacity style={modalStyles.Buttons} onPress={onClose}>
+                <Text style={modalStyles.ButtonText}>Cerrar</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-
-        </View>
+        </ScrollView>
       </View>
     </Modal>
   );

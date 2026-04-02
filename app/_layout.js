@@ -1,17 +1,17 @@
-import { StatusBar } from "react-native";
 import { Stack } from "expo-router";
 import { fonts } from "../fonts/fonts";
 
 export default function RootLayout() {
-    return(
-    <Stack screenOptions={{
-         headerTitleStyle: { fontFamily: fonts.MontserratBold }
-    }}> 
-        <StatusBar StatusBarStyle='dark-content'/>
-        <Stack.Screen name="index" options={{ headerShown: false }} StatusBarStyle='dark-content'/>
-        <Stack.Screen name="exercises/[id]" options={{title: "Editar"}} StatusBarStyle='dark-content'/>
-        <Stack.Screen name="add" options={{title: "Añadir"}} StatusBarStyle='dark-content'/>
+  return (
+    <Stack
+      screenOptions={{
+        headerTitleStyle: { fontFamily: fonts.MontserratBold },
+      }}
+    >
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="exercises/[id]/view" options={{ title: "Ejercicio" }} />
+      <Stack.Screen name="exercises/[id]" options={{ title: "Editar" }} />
+      <Stack.Screen name="add" options={{ title: "Añadir" }} />
     </Stack>
-    )
-
+  );
 }
