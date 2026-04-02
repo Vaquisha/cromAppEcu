@@ -142,7 +142,6 @@ npm run web       # Ejecutar en navegador web
 - El proyecto utiliza **Expo Dev Client** para flujos de desarrollo avanzados.
 - Es importante verificar las rutas de los assets (especialmente audios) para evitar errores del Metro Bundler.
 - Compatible con entornos de desarrollo **Windows, Linux y macOS**.
->>>>>>> e7123f8 (Create README.md)
 
 ---
 
@@ -163,7 +162,7 @@ Esto significa que el software es libre: puedes usarlo, estudiarlo, modificarlo 
 ---
 
 ✨ Desarrollado con React Native y Expo ✨
-=======
+
 Este proyecto se publica bajo la **Licencia Pública General de GNU (GPL)**.
 
 Esto significa que el software puede ser usado, estudiado, modificado y redistribuido libremente, siempre que cualquier trabajo derivado mantenga la misma licencia GPL y se distribuya con su código fuente correspondiente.
