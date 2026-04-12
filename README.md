@@ -1,6 +1,5 @@
 # Cronómetro de series
 
-<<<<<<< HEAD
 ## Descripción del proyecto
 
 **Cronómetro de series** es una aplicación móvil multiplataforma desarrollada con **React Native** dentro del ecosistema **Expo**. El proyecto utiliza **Expo Router** para la navegación basada en archivos e integra diversas APIs de Expo para acceder a funcionalidades nativas manteniendo un único código base.
@@ -87,12 +86,10 @@ Antes de empezar, asegúrate de tener instalado:
 
 Instala Expo CLI con:
 
->>>>>>> origin/master
 ```bash
 npm install -g expo-cli
 ```
 
-<<<<<<< HEAD
 ### Instalación de dependencias
 
 ```bash
@@ -145,28 +142,24 @@ Luego puedes abrir la app en un emulador, un dispositivo físico o directamente 
 ## 🎓 ¿Para qué se hizo este proyecto?
 
 Cronómetro de series fue desarrollada como parte de un proceso de aprendizaje y formación académica, con el objetivo de reforzar conocimientos en desarrollo de aplicaciones móviles y el uso de herramientas modernas para crear apps multiplataforma.
->>>>>>> origin/master
 
 ---
 
 ## 👨‍💻 Autor
 
 **Carlos Vaca**  
-<<<<<<< HEAD
 Tecnólogo en Software | Estudiante de Ingeniería en Sistemas
 =======
 Tecnólogo en Software / Desarrollador de aplicaciones móviles
->>>>>>> origin/master
 
 ---
 
 ## 📄 Licencia
 
-<<<<<<< HEAD
 Este proyecto se publica bajo la **Licencia Pública General de GNU (GPL)**.
 
 Esto significa que el software puede ser usado, estudiado, modificado y redistribuido libremente, siempre que cualquier trabajo derivado mantenga la misma licencia GPL y se distribuya con su código fuente correspondiente.
-=======
+
 Este proyecto se distribuye bajo la **Licencia Pública General de GNU (GPL)**.
 
 Esto significa que el software es libre: puedes usarlo, estudiarlo, modificarlo y compartirlo, siempre que mantengas la misma licencia y compartas el código fuente de cualquier versión derivada.
@@ -174,5 +167,4 @@ Esto significa que el software es libre: puedes usarlo, estudiarlo, modificarlo 
 ---
 
 ✨ Desarrollado con React Native y Expo ✨
->>>>>>> origin/master
 
