@@ -21,7 +21,7 @@ export default function AddScreen() {
   const router = useRouter();
   const scrollViewRef = useRef(null);
   const { storeData } = useExercises();
-  const screenHeight = Dimensions.get('screen').height;
+  const screenHeight = Dimensions.get("screen").height;
   const [newName, setNewName] = useState("");
   const [newDescription, setNewDescription] = useState("");
   const [sets, setSets] = useState([
@@ -30,7 +30,7 @@ export default function AddScreen() {
       series: 1,
       time: 0,
       restTime: 0,
-    }
+    },
   ]);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function AddScreen() {
   }, []);
 
   const handleSetChange = useCallback((setIndex, field, value) => {
-    setSets(prev => {
+    setSets((prev) => {
       const newSets = [...prev];
       newSets[setIndex] = { ...newSets[setIndex], [field]: value };
       return newSets;
@@ -52,8 +52,8 @@ export default function AddScreen() {
   }, []);
 
   const handleAddSet = () => {
-    setSets(prev => {
-      const newSetId = Math.max(...prev.map(s => s.id)) + 1;
+    setSets((prev) => {
+      const newSetId = Math.max(...prev.map((s) => s.id)) + 1;
       return [
         ...prev,
         {
@@ -61,7 +61,7 @@ export default function AddScreen() {
           series: 1,
           time: 0,
           restTime: 0,
-        }
+        },
       ];
     });
   };
@@ -71,7 +71,7 @@ export default function AddScreen() {
       Alert.alert("Atención", "Un ejercicio debe tener al menos un set");
       return;
     }
-    setSets(prev => {
+    setSets((prev) => {
       const newSets = [...prev];
       newSets.splice(setIndex, 1);
       return newSets;
@@ -144,83 +144,93 @@ export default function AddScreen() {
             {/* Sets Management */}
             <View style={styles.field}>
               <Text style={styles.label}>Sets</Text>
-            {sets.map((set, index) => (
-              <View
-                key={set.id}
-                style={{
-                  backgroundColor: '#f9f9f9',
-                  padding: 12,
-                  marginVertical: 8,
-                  borderRadius: 8,
-                  borderLeftWidth: 4,
-                  borderLeftColor: '#14c7dfff'
-                }}
+              {sets.map((set, index) => (
+                <View key={set.id} style={styles.setsContainer}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      marginBottom: 8,
+                    }}
+                  >
+                    <Text style={styles.seriesLabel}>Set {index + 1}</Text>
+                    {sets.length > 1 && (
+                      <TouchableOpacity
+                        onPress={() => handleRemoveSet(index)}
+                        style={{ padding: 4 }}
+                      >
+                        <Text
+                          style={{ color: "#f00404ff", fontWeight: "bold" }}
+                        >
+                          ✕ Eliminar
+                        </Text>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+
+                  {/* Series */}
+                  <View style={{ marginBottom: 8 }}>
+                    <Text style={styles.seriesLabel}>Número de Series</Text>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="3"
+                      placeholderTextColor="#9E9E9E"
+                      value={set.series.toString()}
+                      onChangeText={(text) =>
+                        handleSetChange(index, "series", parseInt(text) || 0)
+                      }
+                      keyboardType="number-pad"
+                    />
+                  </View>
+
+                  {/* Time per series */}
+                  <View style={{ marginBottom: 8 }}>
+                    <Text style={styles.seriesLabel}>
+                      Tiempo por Serie (MM:SS)
+                    </Text>
+                    <CustomTimerInput
+                      onChange={(value) =>
+                        handleSetChange(index, "time", value)
+                      }
+                      initialMinutes={Math.floor(set.time / 60)}
+                      initialSeconds={set.time % 60}
+                    />
+                  </View>
+
+                  {/* Rest Time */}
+                  <View>
+                    <Text style={styles.seriesLabel}>
+                      Descanso entre Series (MM:SS)
+                    </Text>
+                    <CustomTimerInput
+                      onChange={(value) =>
+                        handleSetChange(index, "restTime", value)
+                      }
+                      initialMinutes={Math.floor(set.restTime / 60)}
+                      initialSeconds={set.restTime % 60}
+                    />
+                  </View>
+                </View>
+              ))}
+
+              {/* Add Set Button */}
+              <TouchableOpacity
+                style={styles.addSetButton}
+                onPress={handleAddSet}
               >
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                  <Text style={{ fontSize: 14, fontWeight: 'bold' }}>Set {index + 1}</Text>
-                  {sets.length > 1 && (
-                    <TouchableOpacity
-                      onPress={() => handleRemoveSet(index)}
-                      style={{ padding: 4 }}
-                    >
-                      <Text style={{ color: '#f00404ff', fontWeight: 'bold' }}>✕ Eliminar</Text>
-                    </TouchableOpacity>
-                  )}
-                </View>
-
-                {/* Series */}
-                <View style={{ marginBottom: 8 }}>
-                  <Text style={{ fontSize: 12, fontWeight: '600', marginBottom: 4 }}>Número de Series</Text>
-                  <TextInput
-                    style={[styles.input, { fontSize: 12 }]}
-                    placeholder="3"
-                    placeholderTextColor="#9E9E9E"
-                    value={set.series.toString()}
-                    onChangeText={(text) => handleSetChange(index, 'series', parseInt(text) || 0)}
-                    keyboardType="number-pad"
-                  />
-                </View>
-
-                {/* Time per series */}
-                <View style={{ marginBottom: 8 }}>
-                  <Text style={{ fontSize: 12, fontWeight: '600', marginBottom: 4 }}>Tiempo por Serie (MM:SS)</Text>
-                  <CustomTimerInput
-                    onChange={(value) => handleSetChange(index, 'time', value)}
-                    initialMinutes={Math.floor(set.time / 60)}
-                    initialSeconds={set.time % 60}
-                  />
-                </View>
-
-                {/* Rest Time */}
-                <View>
-                  <Text style={{ fontSize: 12, fontWeight: '600', marginBottom: 4 }}>Descanso entre Series (MM:SS)</Text>
-                  <CustomTimerInput
-                    onChange={(value) => handleSetChange(index, 'restTime', value)}
-                    initialMinutes={Math.floor(set.restTime / 60)}
-                    initialSeconds={set.restTime % 60}
-                  />
-                </View>
-              </View>
-            ))}
-
-            {/* Add Set Button */}
-            <TouchableOpacity
-              style={{
-                backgroundColor: '#28a745',
-                padding: 12,
-                borderRadius: 8,
-                marginTop: 12,
-                alignItems: 'center'
-              }}
-              onPress={handleAddSet}
-            >
-              <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 14 }}>+ Agregar Set</Text>
-            </TouchableOpacity>
-          </View>
+                <Text style={styles.buttonText}>+ Agregar Set</Text>
+              </TouchableOpacity>
+            </View>
           </ScrollView>
 
           {/* Fixed Buttons at Bottom */}
-          <View style={[styles.modpagesContainer, { marginTop: screenHeight < 800 ? 36.8 : 50 }]}>
+          <View
+            style={[
+              styles.modpagesContainer,
+              { marginTop: screenHeight < 800 ? 36.8 : 50 },
+            ]}
+          >
             <TouchableOpacity
               style={[styles.acceptButton]}
               onPress={handleSave}

@@ -113,23 +113,16 @@ export default function ViewExerciseScreen() {
               exerciseData.sets.map((set) => (
                 <View
                   key={set.id}
-                  style={{
-                    backgroundColor: "#f9f9f9",
-                    padding: 12,
-                    marginVertical: 8,
-                    borderRadius: 8,
-                    borderLeftWidth: 4,
-                    borderLeftColor: "#14c7dfff",
-                  }}
+                  style={styles.setsContainer}
                 >
                   <Text
-                    style={{ fontSize: 12, color: "#666", marginBottom: 2 }}
+                    style={styles.seriesLabel}
                   >
                     Series:{" "}
                     <Text style={{ fontWeight: "bold" }}>{set.series}</Text>
                   </Text>
                   <Text
-                    style={{ fontSize: 12, color: "#666", marginBottom: 2 }}
+                    style={styles.seriesLabel}
                   >
                     Tiempo por serie:{" "}
                     <Text style={{ fontWeight: "bold" }}>
@@ -137,7 +130,7 @@ export default function ViewExerciseScreen() {
                     </Text>
                   </Text>
                   {set.restTime > 0 && (
-                    <Text style={{ fontSize: 12, color: "#666" }}>
+                    <Text style={styles.seriesLabel}>
                       Descanso entre series:{" "}
                       <Text style={{ fontWeight: "bold" }}>
                         {formatSecondsToMMSS(set.restTime)}
@@ -162,7 +155,7 @@ export default function ViewExerciseScreen() {
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={[styles.acceptButton, { marginHorizontal: 8 }]}
+              style={[styles.editViewButton]}
               onPress={handleEditExercise}
             >
               <Text style={styles.buttonText}>Editar</Text>
