@@ -12,8 +12,18 @@ export const modalStyles = StyleSheet.create ({
     Title:{
         fontSize:20, 
         fontFamily:fonts.MontserratBold,
-        marginBottom:20
+        marginBottom:20,
+        justifyContent:"center",
+        alignContent: "center",
+        alignItems: "center"
       },
+
+      infoText:{ 
+        fontSize: 20, 
+        color: "#666", 
+        marginBottom: 10,
+        fontFamily: fonts.MontserratMedium
+       },
 
     TimerDisplay:{
         fontSize: 48,
@@ -24,21 +34,21 @@ export const modalStyles = StyleSheet.create ({
     ButtonContainer: {
         flexDirection: 'column', 
         alignItems: 'center', 
-        width: '100%', 
+        width: '125%', 
         gap: 10
       },
 
     Buttons:{
         borderRadius: 5,
-        padding: 10,
-        width: "90%",
+        padding: 12,
+        width: "100%",
         backgroundColor: '#96c3faff',
         justifyContent: "center",
         alignItems: "center",
       },
 
     ButtonText:{
-        fontSize: 22,
+        fontSize: 25,
         fontFamily: fonts.LatoRegular,
       },
 })  

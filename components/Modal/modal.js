@@ -257,10 +257,10 @@ const TimerModal = ({ visible, timeValue, name, onClose, sets = [] }) => {
             alignItems: "center",
           }}
         >
-          <View style={{ width: "90%", alignItems: "center" }}>
+          <View style={{ width: "100%", alignItems: "center", justifyContent: "center" }}>
             <Text style={modalStyles.Title}>{setName}</Text>
             {info && (
-              <Text style={{ fontSize: 16, color: "#666", marginBottom: 10 }}>
+              <Text style={modalStyles.infoText}>
                 {info}
               </Text>
             )}
@@ -279,14 +279,14 @@ const TimerModal = ({ visible, timeValue, name, onClose, sets = [] }) => {
                 }}
               >
                 <TouchableOpacity
-                  style={[modalStyles.Buttons, { flex: 0.4, padding: 8 }]}
+                  style={[modalStyles.Buttons, { flex: 0.4, padding: 10 }]}
                   onPress={handleSkip5Seconds}
                   disabled={!isRunning}
                 >
                   <Text style={modalStyles.ButtonText}>-5s</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={[modalStyles.Buttons, { flex: 0.4, padding: 8 }]}
+                  style={[modalStyles.Buttons, { flex: 0.4, padding: 10 }]}
                   onPress={handleAdd5Seconds}
                   disabled={!isRunning}
                 >
