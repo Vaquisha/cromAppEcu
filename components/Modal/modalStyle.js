@@ -42,9 +42,22 @@ export const modalStyles = StyleSheet.create ({
         borderRadius: 5,
         padding: 12,
         width: "100%",
+        minWidth: 300,
         backgroundColor: '#96c3faff',
         justifyContent: "center",
         alignItems: "center",
+      },
+
+      TimerButtons:{
+        borderRadius: 5,
+        padding: 12,
+        width: "100%",
+        minWidth: 20,
+        backgroundColor: '#96c3faff',
+        justifyContent: "center",
+        alignItems: "center",
+        flex: 0.4,
+        padding: 10
       },
 
     ButtonText:{

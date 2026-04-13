@@ -83,6 +83,7 @@ const TimerModal = ({ visible, timeValue, name, onClose, sets = [] }) => {
   const [modalSeconds, setModalSeconds] = useState(initial);
   const [displaySeconds, setDisplaySeconds] = useState(initial);
   const [isRunning, setIsRunning] = useState(false);
+  const [firstSeriesStarted, setFirstSeriesStarted] = useState(false);
   const intervalRef = useRef(null);
 
   useEffect(() => {
@@ -93,6 +94,7 @@ const TimerModal = ({ visible, timeValue, name, onClose, sets = [] }) => {
     setCurrentSetIndex(0);
     setCurrentSeriesIndex(0);
     setIsRestPeriod(false);
+    setFirstSeriesStarted(false);
   }, [visible]);
 
   useEffect(() => {
@@ -119,13 +121,13 @@ const TimerModal = ({ visible, timeValue, name, onClose, sets = [] }) => {
     };
   }, [visible, isRunning, displaySeconds]);
 
-  const handleTimerFinished = () => {
+  const handleTimerFinished = async () => {
     if (!sets || sets.length === 0) return;
 
     const currentSet = sets[currentSetIndex];
 
     if (isRestPeriod) {
-      // Rest period finished, go to next series
+      // Rest period finished, go to next series or next set
       if (currentSeriesIndex < currentSet.series - 1) {
         // More series in this set
         setCurrentSeriesIndex((prev) => prev + 1);
@@ -133,6 +135,7 @@ const TimerModal = ({ visible, timeValue, name, onClose, sets = [] }) => {
         const nextSeriesTime = currentSet.time || 0;
         setModalSeconds(nextSeriesTime);
         setDisplaySeconds(nextSeriesTime);
+        await playAlarmSound();
         // Keep isRunning true to continue automatically
       } else {
         // All series done, move to next set
@@ -143,6 +146,7 @@ const TimerModal = ({ visible, timeValue, name, onClose, sets = [] }) => {
           const nextSetTime = sets[currentSetIndex + 1].time || 0;
           setModalSeconds(nextSetTime);
           setDisplaySeconds(nextSetTime);
+          await playAlarmSound();
           // Keep isRunning true to continue automatically
         } else {
           // All sets finished
@@ -152,6 +156,7 @@ const TimerModal = ({ visible, timeValue, name, onClose, sets = [] }) => {
       }
     } else {
       // Series finished
+
       if (currentSet.restTime > 0) {
         // Start rest period
         setIsRestPeriod(true);
@@ -213,12 +218,21 @@ const TimerModal = ({ visible, timeValue, name, onClose, sets = [] }) => {
     }
   }, [displaySeconds, visible, isRunning]);
 
+  const getCurrentSegmentDuration = () => {
+    if (!sets || sets.length === 0) {
+      return parseToSeconds(timeValue);
+    }
+    const currentSet = sets[currentSetIndex];
+    return isRestPeriod ? currentSet.restTime || 0 : currentSet.time || 0;
+  };
+
   const handleSkip5Seconds = () => {
-    setDisplaySeconds((prev) => Math.max(0, prev - 5));
+    const segmentDuration = getCurrentSegmentDuration();
+    setDisplaySeconds((prev) => Math.min(segmentDuration, prev + 5));
   };
 
   const handleAdd5Seconds = () => {
-    setDisplaySeconds((prev) => prev + 5);
+    setDisplaySeconds((prev) => Math.max(1, prev - 5));
   };
 
   const getDisplayInfo = () => {
@@ -279,16 +293,22 @@ const TimerModal = ({ visible, timeValue, name, onClose, sets = [] }) => {
                 }}
               >
                 <TouchableOpacity
-                  style={[modalStyles.Buttons, { flex: 0.4, padding: 10 }]}
+                  style={modalStyles.TimerButtons}
                   onPress={handleSkip5Seconds}
-                  disabled={!isRunning}
+                  disabled={
+                    !isRunning ||
+                    displaySeconds >= getCurrentSegmentDuration()
+                  }
                 >
                   <Text style={modalStyles.ButtonText}>-5s</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={[modalStyles.Buttons, { flex: 0.4, padding: 10 }]}
+                  style={modalStyles.TimerButtons}
                   onPress={handleAdd5Seconds}
-                  disabled={!isRunning}
+                  disabled={
+                    !isRunning ||
+                    displaySeconds <= 1
+                  }
                 >
                   <Text style={modalStyles.ButtonText}>+5s</Text>
                 </TouchableOpacity>
@@ -298,6 +318,10 @@ const TimerModal = ({ visible, timeValue, name, onClose, sets = [] }) => {
                 style={modalStyles.Buttons}
                 onPress={async () => {
                   if (!isRunning && displaySeconds > 0) {
+                    if (!firstSeriesStarted) {
+                      await playAlarmSound();
+                      setFirstSeriesStarted(true);
+                    }
                     await playBeepSound();
                     setIsRunning(true);
                   } else {
