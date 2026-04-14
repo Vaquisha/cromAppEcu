@@ -150,6 +150,17 @@ export const styles = StyleSheet.create({
     marginTop: "50%",
   },
 
+  removeSetButton: {
+    backgroundColor: "#f00404ff",
+    padding: 6,
+    borderRadius: 6,
+  },
+
+  removeSetButtonText:{ 
+    color: "#ffff", 
+    fontFamily: fonts.LatoBold
+  },
+
   setsContainer: {
     backgroundColor: "#f9f9f9",
     padding: 12,

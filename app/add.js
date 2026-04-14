@@ -93,6 +93,18 @@ export default function AddScreen() {
         return;
       }
 
+      const invalidTimeSet = sets.find(
+        (set) => set.time === 0 || set.restTime === 0,
+      );
+
+      if (invalidTimeSet) {
+        Alert.alert(
+          "Atención",
+          "El tiempo por serie y el descanso entre series no pueden ser 0.",
+        );
+        return;
+      }
+
       await storeData({
         name: newName,
         description: newDescription,
@@ -160,11 +172,13 @@ export default function AddScreen() {
                         onPress={() => handleRemoveSet(index)}
                         style={{ padding: 4 }}
                       >
-                        <Text
-                          style={{ color: "#f00404ff", fontWeight: "bold" }}
-                        >
-                          ✕ Eliminar
-                        </Text>
+                        <View style={styles.removeSetButton}>
+                          <Text
+                            style={styles.removeSetButtonText}
+                          >
+                            ✕ Eliminar
+                          </Text>
+                        </View>
                       </TouchableOpacity>
                     )}
                   </View>
