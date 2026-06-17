@@ -5,7 +5,7 @@ export default function RootLayout() {
   return (
     <Stack
       screenOptions={{
-        headerTitleStyle: { fontFamily: fonts.MontserratBold },
+        headerTitleStyle: { fontFamily: fonts.MontserratBold }, statusBarStyle: "dark"
       }}
     >
       <Stack.Screen name="index" options={{ headerShown: false }} />

@@ -106,8 +106,8 @@ export default function AddScreen() {
       }
 
       await storeData({
-        name: newName,
-        description: newDescription,
+        name: newName.trim(),
+        description: newDescription.trim(),
         sets: sets,
       });
 
@@ -242,7 +242,7 @@ export default function AddScreen() {
           <View
             style={[
               styles.modpagesContainer,
-              { marginTop: screenHeight < 800 ? 36.8 : 50 },
+              { marginTop: screenHeight < 800 ? 12 : 15 },
             ]}
           >
             <TouchableOpacity

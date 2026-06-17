@@ -146,7 +146,7 @@ export default function ViewExerciseScreen() {
           </ScrollView>
 
           {/* Fixed Buttons at Bottom */}
-          <View style={[styles.modpagesContainer, { marginTop: screenHeight < 800 ? 36.8 : 50 }]}>
+          <View style={[styles.modpagesContainer, { marginTop: screenHeight < 800 ? 12 : 15 }]}>
             <TouchableOpacity
               style={[styles.acceptButton]}
               onPress={handleStartExercise}

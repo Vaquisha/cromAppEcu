@@ -74,7 +74,7 @@ export default function EditScreen() {
     setExerciseData((prev) => {
       const newData = { ...prev };
       newData.sets.splice(setIndex, 1);
-      return newData;
+      return newData
     });
   };
 
@@ -150,11 +150,11 @@ export default function EditScreen() {
                           onPress={() => handleRemoveSet(index)}
                           style={{ padding: 4 }}
                         >
-                          <Text
-                            style={{ color: "#f00404ff", fontWeight: "bold" }}
-                          >
-                            ✕ Eliminar
-                          </Text>
+                          <View style={styles.removeSetButton}>
+                            <Text style={styles.removeSetButtonText}>
+                              ✕ Eliminar
+                            </Text>
+                          </View>
                         </TouchableOpacity>
                       )}
                     </View>
@@ -218,7 +218,7 @@ export default function EditScreen() {
           <View
             style={[
               styles.modpagesContainer,
-              { marginTop: screenHeight < 800 ? 36.8 : 50 },
+              { marginTop: screenHeight < 800 ? 12 : 15 },
             ]}
           >
             <TouchableOpacity
@@ -235,7 +235,11 @@ export default function EditScreen() {
                   return;
                 }
                 try {
-                  await updateExercise(exerciseData);
+                  await updateExercise({
+                    ...exerciseData,
+                    name: exerciseData.name.trim(),
+                    description: exerciseData.description.trim(),
+                  });
                   router.back();
                 } catch (e) {
                   console.log("Error updating", e);

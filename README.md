@@ -23,14 +23,14 @@ La aplicación sigue una arquitectura modular y escalable, adecuada para evaluac
 
 ## 📂 Estructura del proyecto
 
-```
+```bash
 EcuadorFoodApp/
 ├── app/                 # Pantallas y rutas (Expo Router)
-├── assets/              # Imágenes, audios y fuentes
+├── assets/              # Imágenes y audios utilizados
 ├── components/          # Componentes reutilizables
-├── constants/           # Constantes y configuración global
-├── hooks/               # Hooks personalizados
-├── app.json             # Configuración de Expo
+├── data/                # En dónde se almacena el CRUD
+├── fonts/               # En dónde se almacenan las fuentes
+├── app.json             # Configuración general del proyecto
 ├── package.json         # Dependencias y scripts
 ├── README.md            # Documentación
 ```
@@ -45,7 +45,6 @@ EcuadorFoodApp/
 - npm o yarn
 - Expo CLI
 
-=======
 ## ¿Qué es Cronómetro de series?
 
 **Cronómetro de series** es una aplicación móvil multiplataforma creada con **React Native** y **Expo**, pensada para ofrecer una experiencia sencilla, rápida y moderna en **Android**, **iOS** y también en **Web**.
@@ -127,7 +126,6 @@ npm run web       # Ejecutar en navegador web
 - El proyecto utiliza **Expo Dev Client** para flujos de desarrollo avanzados.
 - Es importante verificar las rutas de los assets (especialmente audios) para evitar errores del Metro Bundler.
 - Compatible con entornos de desarrollo **Windows, Linux y macOS**.
-=======
 ### Ejecutar la aplicación
 
 ```bash
@@ -149,8 +147,6 @@ Cronómetro de series fue desarrollada como parte de un proceso de aprendizaje y
 
 **Carlos Vaca**  
 Tecnólogo en Software | Estudiante de Ingeniería en Sistemas
-=======
-Tecnólogo en Software / Desarrollador de aplicaciones móviles
 
 ---
 
@@ -167,4 +163,3 @@ Esto significa que el software es libre: puedes usarlo, estudiarlo, modificarlo 
 ---
 
 ✨ Desarrollado con React Native y Expo ✨
-
