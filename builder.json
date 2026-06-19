@@ -1,0 +1,16 @@
+{
+  "project": "EcuadorFoodApp",
+  "platform": "ios",
+  "github": {
+    "owner": "Vaquisha",
+    "repo": "cromAppEcu"
+  },
+  "ios": {},
+  "flutter": {
+    "watch": {}
+  },
+  "reactNative": {
+    "expo": true
+  },
+  "mobai": {}
+}
