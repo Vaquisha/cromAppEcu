@@ -69,21 +69,12 @@ export default function Index() {
   const { exerciseList, removeValue } = useExercises();
 
   const [fontsLoaded] = useFonts({
-    [fonts.LatoBlack]: require("../fonts/Lato/Lato-Black.ttf"),
     [fonts.LatoRegular]: require("../fonts/Lato/Lato-Regular.ttf"),
-    [fonts.LatoThin]: require("../fonts/Lato/Lato-Thin.ttf"),
     [fonts.LatoBold]: require("../fonts/Lato/Lato-Bold.ttf"),
-    [fonts.LatoLight]: require("../fonts/Lato/Lato-Light.ttf"),
 
-    [fonts.MontserratBlack]: require("../fonts/Montserrat/static/Montserrat-Black.ttf"),
-    [fonts.MontserratBold]: require("../fonts/Montserrat/static/Montserrat-Bold.ttf"),
-    [fonts.MontserratExtraBold]: require("../fonts/Montserrat/static/Montserrat-ExtraBold.ttf"),
-    [fonts.MontserratExtraLight]: require("../fonts/Montserrat/static/Montserrat-ExtraLight.ttf"),
-    [fonts.MontserratLight]: require("../fonts/Montserrat/static/Montserrat-Light.ttf"),
-    [fonts.MontserratMedium]: require("../fonts/Montserrat/static/Montserrat-Medium.ttf"),
-    [fonts.MontserratRegular]: require("../fonts/Montserrat/static/Montserrat-Regular.ttf"),
-    [fonts.MontserratSemiBold]: require("../fonts/Montserrat/static/Montserrat-SemiBold.ttf"),
-    [fonts.MontserratThin]: require("../fonts/Montserrat/static/Montserrat-Thin.ttf"),
+    [fonts.MontserratRegular]: require("../fonts/Montserrat/Montserrat-Regular.ttf"),
+    [fonts.MontserratBold]: require("../fonts/Montserrat/Montserrat-Bold.ttf"),
+    [fonts.MontserratMedium]: require("../fonts/Montserrat/Montserrat-Medium.ttf"),
   });
 
   const [modalVisible, setModalVisible] = useState(false);
