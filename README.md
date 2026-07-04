@@ -2,13 +2,13 @@
 
 ## Descripción del proyecto
 
-**Cronómetro de series** es una aplicación móvil multiplataforma desarrollada con **React Native** dentro del ecosistema **Expo**. El proyecto utiliza **Expo Router** para la navegación basada en archivos e integra diversas APIs de Expo para acceder a funcionalidades nativas manteniendo un único código base.
+Es un simple cronómetro que te permite guardar una serie y poder utilizar la al momento de realizar tus ejercicios de cualquier índole, ya sea fortalecimiento de músculos, terapia rehabilitadora, etc.
+Este proyecto fué realizado con el propósito de brindar una interfaz amigable al usuario, sin tanto ruido visual, sin suscripciones, anuncios, o cualquier interrupción o limitación al momento de realizar todo lo que necesitas para poder tener una correcta trazabilidad de tus ejercicios mediante la app.
 
-La aplicación sigue una arquitectura modular y escalable, adecuada para evaluación académica, prototipado y como base para aplicaciones móviles de nivel productivo.
+La decisión de hacerla de código abierto vino de la poca demanda que hay de estas apps y las que hay, son de paga o repletas de anuncios, por eso brindo este pequeño proyecto a disposición de las personas que deseen contribuir al desarrollo del mismo
 
----
 
-## 🛠️ Stack tecnológico
+## Stack tecnológico
 
 - **React Native** – Framework de interfaz de usuario
 - **Expo SDK 54** – Entorno de ejecución y herramientas
@@ -27,9 +27,10 @@ La aplicación sigue una arquitectura modular y escalable, adecuada para evaluac
 EcuadorFoodApp/
 ├── app/                 # Pantallas y rutas (Expo Router)
 ├── assets/              # Imágenes y audios utilizados
-├── components/          # Componentes reutilizables
+├── components/          # Componentes reutilizables y su estilizado
 ├── data/                # En dónde se almacena el CRUD
 ├── fonts/               # En dónde se almacenan las fuentes
+├── styles/              # La carpeta de estilos
 ├── app.json             # Configuración general del proyecto
 ├── package.json         # Dependencias y scripts
 ├── README.md            # Documentación
@@ -37,7 +38,7 @@ EcuadorFoodApp/
 
 ---
 
-## ⚙️ Instalación y configuración
+## Instalación y configuración
 
 ### Requisitos previos
 
@@ -47,13 +48,11 @@ EcuadorFoodApp/
 
 ## ¿Qué es Cronómetro de series?
 
-**Cronómetro de series** es una aplicación móvil multiplataforma creada con **React Native** y **Expo**, pensada para ofrecer una experiencia sencilla, rápida y moderna en **Android**, **iOS** y también en **Web**.
-
-Es un proyecto ideal para fines educativos, prácticas académicas y como ejemplo de cómo desarrollar una app usando un solo código para varias plataformas. Su enfoque principal es la facilidad de uso y una interfaz clara para el usuario.
+Es una aplicación para realizar una serie y poder guardarla para la ejecución de tus ejercicios, sea en cualquier caso que desees utilizar. Esta app esta pensada para ser multiplataforma. Tiene una interfaz limpia, intuitiva y muy práctica, ya que no posee anuncios, ruido visual, menús complicados ni otro tipo de distracción o molestia al momento de usarla.
 
 ---
 
-## 🚀 Tecnologías que se usaron
+## Tecnologías que se usaron
 
 - React Native
 - Expo (SDK 54)
@@ -62,18 +61,17 @@ Es un proyecto ideal para fines educativos, prácticas académicas y como ejempl
 
 ---
 
-## 📱 ¿Qué puedes hacer con la app?
+## ¿Qué puedes hacer con la app?
 
-- Usar una interfaz simple e intuitiva
-- Navegar fácilmente entre pantallas
-- Ejecutarla en Android, iOS o desde el navegador
-- Guardar información de forma local
-- Reproducir audio
-- Disfrutar de un diseño adaptable a distintos tamaños de pantalla
+- Guardar ejercicios
+- Editar ejercicios
+- Revisar tu historial ***(no implementado aún)***
+- Reproduce sonidos de inicio y fin
+- Tema oscuro y claro ***(no implementado aún)***
 
 ---
 
-## ▶️ Cómo ejecutar el proyecto
+## ¿Cómo ejecutar el proyecto?
 
 ### Requisitos básicos
 
@@ -81,15 +79,15 @@ Antes de empezar, asegúrate de tener instalado:
 
 - Node.js (versión 18 o superior recomendada)
 - npm o yarn
-- Expo CLI
 
-Instala Expo CLI con:
+### Instala Expo CLI ***(opcional)***:
 
 ```bash
 npm install -g expo-cli
+# También puedes iniciarlo con npm
 ```
 
-### Instalación de dependencias
+### Instalación/inicialización de dependencias en tu equipo local
 
 ```bash
 npm install
@@ -98,10 +96,17 @@ npm install
 ### Servidor de desarrollo
 
 ```bash
-expo start
+expo start 
+# Para inicializarlo con Expo
 ```
 
-Comandos disponibles:
+### .. o en su defecto
+```bash
+npm start
+# Esto inicia el proyecto con npm
+```
+
+### Comandos disponibles:
 
 ```bash
 npm run android   # Ejecutar en Android
@@ -109,9 +114,8 @@ npm run ios       # Ejecutar en iOS
 npm run web       # Ejecutar en navegador web
 ```
 
----
 
-## 🧩 Capacidades de la aplicación
+## Capacidades de la aplicación
 
 - Navegación basada en archivos mediante Expo Router
 - Persistencia de estado con AsyncStorage
@@ -119,47 +123,14 @@ npm run web       # Ejecutar en navegador web
 - Manejo de archivos y recursos locales
 - Interfaz adaptable a múltiples resoluciones
 
----
 
-## ⚠️ Notas de desarrollo
-
-- El proyecto utiliza **Expo Dev Client** para flujos de desarrollo avanzados.
-- Es importante verificar las rutas de los assets (especialmente audios) para evitar errores del Metro Bundler.
-- Compatible con entornos de desarrollo **Windows, Linux y macOS**.
-### Ejecutar la aplicación
-
-```bash
-npm install
-expo start
-```
-
-Luego puedes abrir la app en un emulador, un dispositivo físico o directamente en el navegador web.
-
----
-
-## 🎓 ¿Para qué se hizo este proyecto?
+## ¿Para qué se hizo este proyecto?
 
 Cronómetro de series fue desarrollada como parte de un proceso de aprendizaje y formación académica, con el objetivo de reforzar conocimientos en desarrollo de aplicaciones móviles y el uso de herramientas modernas para crear apps multiplataforma.
 
----
-
-## 👨‍💻 Autor
-
-**Carlos Vaca**  
-Tecnólogo en Software | Estudiante de Ingeniería en Sistemas
-
----
 
 ## 📄 Licencia
 
-Este proyecto se publica bajo la **Licencia Pública General de GNU (GPL)**.
+Este proyecto se publica bajo la **Licencia Pública General de GNU versión 3 (GPLv3)**.
 
-Esto significa que el software puede ser usado, estudiado, modificado y redistribuido libremente, siempre que cualquier trabajo derivado mantenga la misma licencia GPL y se distribuya con su código fuente correspondiente.
-
-Este proyecto se distribuye bajo la **Licencia Pública General de GNU (GPL)**.
-
-Esto significa que el software es libre: puedes usarlo, estudiarlo, modificarlo y compartirlo, siempre que mantengas la misma licencia y compartas el código fuente de cualquier versión derivada.
-
----
-
-✨ Desarrollado con React Native y Expo ✨
+El código fuente de este software puede ser utilizado con fines educativos, de investigación, para uso personal y todas sus modificaciones deben de ser compartidas con el público a través de este repositorio o cualquier otro método de difusión
