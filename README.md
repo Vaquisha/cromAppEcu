@@ -6,49 +6,25 @@
 
 Es un proyecto ideal para fines educativos, prácticas académicas y como ejemplo de cómo desarrollar una app usando un solo código para varias plataformas. Su enfoque principal es la facilidad de uso y una interfaz clara para el usuario.
 
----
 
-## 🚀 Tecnologías que se usaron
-
-- React Native
-- Expo (SDK 54)
-- Expo Router
-- JavaScript / JSX
-
----
-
-## 📱 ¿Qué puedes hacer con la app?
+## ¿Qué puedes hacer con la app?
 
 - Usar una interfaz simple e intuitiva
 - Navegar fácilmente entre pantallas
 - Ejecutarla en Android, iOS o desde el navegador
-- Guardar información de forma local
-- Reproducir audio
-- Disfrutar de un diseño adaptable a distintos tamaños de pantalla
+- Guardar datos de ejercio de forma local
+- Reproduce sonidos indicando el inicio y fin de un ejercicio
+- Disfrutar de un diseño responsive
 
----
-
-## ▶️ Cómo ejecutar el proyecto
-
-### Requisitos básicos
-
-Antes de empezar, asegúrate de tener instalado:
-
-- Node.js (versión 18 o superior recomendada)
-- npm o yarn
-- Expo CLI
-
-Instala Expo CLI con:
 
 ## Descripción del proyecto
 
-**Cronómetro de series** es una aplicación móvil multiplataforma desarrollada con **React Native** dentro del ecosistema **Expo**. El proyecto utiliza **Expo Router** para la navegación basada en archivos e integra diversas APIs de Expo para acceder a funcionalidades nativas manteniendo un único código base.
+Cronómetro de series es una aplicación móvil multiplataforma desarrollada con React Native dentro del ecosistema Expo. El proyecto utiliza Expo Router para la navegación basada en archivos e integra diversas APIs de Expo para acceder a funcionalidades nativas manteniendo un único código base.
 
 La aplicación sigue una arquitectura modular y escalable, adecuada para evaluación académica, prototipado y como base para aplicaciones móviles de nivel productivo.
 
----
 
-## 🛠️ Stack tecnológico
+## Stack tecnológico
 
 - **React Native** – Framework de interfaz de usuario
 - **Expo SDK 54** – Entorno de ejecución y herramientas
@@ -59,111 +35,39 @@ La aplicación sigue una arquitectura modular y escalable, adecuada para evaluac
 - **Expo File System** – Gestión de archivos locales
 - **Expo Font** – Carga de fuentes personalizadas
 
----
 
 ## 📂 Estructura del proyecto
 
-```
+``` bash
 EcuadorFoodApp/
 ├── app/                 # Pantallas y rutas (Expo Router)
 ├── assets/              # Imágenes, audios y fuentes
 ├── components/          # Componentes reutilizables
-├── constants/           # Constantes y configuración global
-├── hooks/               # Hooks personalizados
+├── fonts/               # Fuentes personalizadas
 ├── app.json             # Configuración de Expo
 ├── package.json         # Dependencias y scripts
 ├── README.md            # Documentación
 ```
-
 ---
 
-## ⚙️ Instalación y configuración
+## ¿Para qué se hizo este proyecto?
 
-### Requisitos previos
+Debido a la poca demanda de esta clase de aplicaciones y a la necesidad de una solución para mis ejercicios y diversas actividades al aire libre me vi en la tarea de crear un programa móvil para suplir dichas necesidades, ya que, como anteriormente se menciona no habían muchas opciones y las pocas que lograba encontrar eran de pago, con muchos anuncios, o directamente no tenían todas las funcionalidades que yo necesitaba.
 
-- Node.js >= 18
-- npm o yarn
-- Expo CLI
-
-```bash
-npm install -g expo-cli
-```
+Decidí hacerlo de código abierto para simpatizar con aquellas personas que pueden verse en la misma situación que yo, por lo que son libres de tomar el código cuando lo crean necesario.
 
 
-### Ejecutar la aplicación
-
-```bash
-npm install
-expo start
-```
-
-Luego puedes abrir la app en un emulador, un dispositivo físico o directamente en el navegador web.
-
----
-
-## 🎓 ¿Para qué se hizo este proyecto?
-
-Cronómetro de series fue desarrollada como parte de un proceso de aprendizaje y formación académica, con el objetivo de reforzar conocimientos en desarrollo de aplicaciones móviles y el uso de herramientas modernas para crear apps multiplataforma.
-
-### Instalación de dependencias
-
-```bash
-npm install
-```
-
-### Servidor de desarrollo
-
-```bash
-expo start
-```
-
-Comandos disponibles:
-
-```bash
-npm run android   # Ejecutar en Android
-npm run ios       # Ejecutar en iOS
-npm run web       # Ejecutar en navegador web
-```
-
----
-
-## 🧩 Capacidades de la aplicación
+## Capacidades de la aplicación
 
 - Navegación basada en archivos mediante Expo Router
 - Persistencia de estado con AsyncStorage
 - Reproducción de audio con Expo AV
-- Manejo de archivos y recursos locales
 - Interfaz adaptable a múltiples resoluciones
 
----
 
-## ⚠️ Notas de desarrollo
 
-- El proyecto utiliza **Expo Dev Client** para flujos de desarrollo avanzados.
-- Es importante verificar las rutas de los assets (especialmente audios) para evitar errores del Metro Bundler.
-- Compatible con entornos de desarrollo **Windows, Linux y macOS**.
+## Licencia
 
----
+Este proyecto se distribuye bajo la **Licencia Pública General de GNU versión 3 (GPLv3)**.
 
-## 👨‍💻 Autor
-
-**Carlos Vaca**  
-Tecnólogo en Software / Desarrollador de aplicaciones móviles
-Tecnólogo en Software | Estudiante de Ingeniería en Sistemas
-
----
-
-## 📄 Licencia
-
-Este proyecto se distribuye bajo la **Licencia Pública General de GNU (GPL)**.
-
-Esto significa que el software es libre: puedes usarlo, estudiarlo, modificarlo y compartirlo, siempre que mantengas la misma licencia y compartas el código fuente de cualquier versión derivada.
-
----
-
-✨ Desarrollado con React Native y Expo ✨
-
-Este proyecto se publica bajo la **Licencia Pública General de GNU (GPL)**.
-
-Esto significa que el software puede ser usado, estudiado, modificado y redistribuido libremente, siempre que cualquier trabajo derivado mantenga la misma licencia GPL y se distribuya con su código fuente correspondiente.
-
+Este software puede ser utilizado, modificado y compilado en cualquier equipo por cualquier persona con fines educativos, de investigación o personal, siempre y cuando, que cualquier modificación que se haga a dicho código fuente sea compartida por este medio u otros. Queda probibido cualquier uso comercial o de apropiación con fines comerciales.
